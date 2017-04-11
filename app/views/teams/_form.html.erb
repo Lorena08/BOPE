@@ -1,0 +1,26 @@
+<br/>
+<%= form_for(@team, html: { class: "basic-grey" }) do |f| %>
+  <h1><%= @team.model_name.human %></h1>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.submit t('buttons.save'), class: "btn btn-primary" %>
+    <%= link_to t('buttons.back'), teams_path, class: "btn btn-success"%>
+  </div>
+
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= "#{pluralize(@team.errors.count, 'error')} #{t('messages.errors')}:" %></h2>
+
+      <ul>
+      <% @team.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>

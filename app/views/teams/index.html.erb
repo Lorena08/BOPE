@@ -1,0 +1,37 @@
+<br/>
+<div class="basic-grey">
+
+  <script>
+    $.notify("<%= notice %>", "success"); 
+  </script>
+
+  <h1><%= "#{t('messages.listing')} #{@teams.model.model_name.human(count: @teams.count)}" %></h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th><%= @teams.model.human_attribute_name("description") %></th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @teams.each do |team| %>
+        <tr style="background: <%= cycle('white', '#f0f0f5') %>">
+          <td><%= team.description %></td>
+          <td><%= link_to t('buttons.edit'), edit_team_path(team) %></td>
+          <td><%= link_to t('buttons.destroy'), team, method: :delete, data: { confirm: t('messages.confirm') } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= paginate @teams %>
+
+  <br>
+
+  <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %>
+  <%= link_to t('buttons.home'),root_path, class: "btn btn-success" %>
+</div>

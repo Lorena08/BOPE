@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @team.description %>
+</p>
+
+
+<%= link_to t('buttons.edit'), edit_team_path, class: "btn btn-primary" %>
+<%= link_to t('buttons.back'),teams_path, class: "btn btn-success" %>
