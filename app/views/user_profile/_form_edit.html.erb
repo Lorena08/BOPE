@@ -1,0 +1,93 @@
+<br/>
+  <h2><center>Editar usuário</center></h2>
+<br/>
+<%= form_for(@user, url: user_profile_path, html: { multipart: true }) do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-dismissible alert-danger">
+        <p><h5> Existe(m) <%= @user.errors.count %> erro(s) no formulário:</h5></p>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+          <h6><li><%= message %></li></p></h6>
+      <% end %>
+      </ul>
+    </div>
+    </div>
+    <br>
+  <% end %>
+
+  <div class="col-sm-15" "panel panel-default">
+    <div class="col-sm-3" "panel-heading">
+      <ul class="nav nav-pills nav-stacked">
+      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
+      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
+      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
+      <li class="success"><a href="#">Projetos</a></li>
+      <li class="info"><a href="#">Relatórios</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9" "panel-body">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><center>Usuário</center></h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend><center>Informações</center></legend>
+            <div class="form-group">
+              <label for="inputEmail" class="col-lg-4 control-label">E-mail: </label>
+              <div class="col-lg-40">
+                <%= f.email_field :email %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-4 control-label">Senha: </label>
+              <div class="col-lg-40">
+                <%= f.password_field :password %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-4 control-label">Confirme sua senha: </label>
+              <div class="col-lg-40">
+                <%= f.password_field :password_confirmation %>
+              </div>
+            </div>
+            <%= f.fields_for :user_profile do |user_profile| %>
+              <div class="form-group">
+                <label for="inputNumber" class="col-lg-4 control-label">Matrícula: </label>
+                <div class="col-lg-40">
+                  <%= user_profile.text_field :student_number %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputName" class="col-lg-4 control-label">Nome: </label>
+                <div class="col-lg-40">
+                  <%= user_profile.text_field :name %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputName" class="col-lg-4 control-label">Acesso: </label>
+                <div class="col-lg-40">
+                  <%= user_profile.select(:role, ['Total', 'Parcial']) %>
+                </div>
+              </div>
+              <div class="form-group">
+                  <label for="inputName" class="col-lg-8 control-label">Foto de perfil: </label>
+                  <div class="col-lg-40">
+                    <%= user_profile.file_field :picture %>
+                  </div>
+              </div>
+            <% end %>
+
+      </div>
+
+      <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
+      <%= link_to t('buttons.back'), user_profile_index_path, class: "btn btn-success"%>
+
+    </div>
+  </div>
+
+<% end %>

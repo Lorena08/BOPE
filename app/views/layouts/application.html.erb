@@ -3,15 +3,22 @@
 <head>
   <title>BOPE</title>
   <%= stylesheet_link_tag    'application' %>
-  <%= stylesheet_link_tag    params[:controller] %>
   <%= javascript_include_tag 'application' %>
   <%#= javascript_include_tag 'alert' %>
-  <%= javascript_include_tag params[:controller] %>
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cyborg/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-D9XILkoivXN+bcvB2kSOowkIvIcBbNdoDQvfBNsxYAIieZbx8/SI4NeUvrRGCpDi" crossorigin="anonymous"  media="screen">
+
   <%= csrf_meta_tags %>
+
+
 </head>
 <body>
 
 <%= yield %>
+
+<script>
+    $.notify("<%= notice %>", "success");
+</script>
 
 </body>
 </html>

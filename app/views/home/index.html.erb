@@ -1,8 +1,37 @@
 <br/>
-<div class="basic-grey">
-  <h1>Seja bem-vindo!</h1>
-  <ul>
-    <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> - <%= link_to "Usuários", users_path %></li>
-    <li><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> - <%= link_to "Equipes", teams_path %></li>
-  </ul>
+<head>
+  <div class="panel panel-default">
+    <div class=panel-heading>
+      <h3 class="panel-title"><h2><center>Seja bem-vindo!</center></h2><br></h3>
+    </div>
+    <div class="panel-body">
+      <p class="pull-right">
+        <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
+      </p>
+    </div>
+  </div>
+
+</head>
+
+<div class="col-sm-15" "panel panel-default">
+  <div class="col-sm-3" "panel-heading">
+    <ul class="nav nav-pills nav-stacked">
+    <li class="active"><%= link_to t('buttons.home'),root_path %></li>
+    <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
+    <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
+    <li class="success"><a href="#">Projetos</a></li>
+    <li class="info"><a href="#">Relatórios</a></li>
+    </ul>
+  </div>
+  <div class="col-sm-9" "panel-body">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel primary</h3>
+      </div>
+    </div>
+    <div class="panel-body">
+      Panel content
+    </div>
+  </div>
+
 </div>

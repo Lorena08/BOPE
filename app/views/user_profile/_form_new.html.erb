@@ -1,0 +1,59 @@
+<br/>
+<%= form_for(@user, url: user_profile_index_path, method: :post, html: { class: "basic-grey" , multipart: true }) do |f| %>
+  <h1><%= @user.model_name.human %></h1>
+
+
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %> erro(s) ocorreram:</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+    <br>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <label><%= f.label :password %></label>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="field">
+    <label><%= f.label :password_confirmation %></label>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <%= f.fields_for :user_profile do |user_profile| %>
+    <div class="field">
+      <%= user_profile.label :student_number %>
+      <%= user_profile.text_field :student_number %>
+    </div>
+
+    <div class="field">
+      <%= user_profile.label :name %>
+      <%= user_profile.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= user_profile.file_field :picture %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.submit t('buttons.save'), class: "btn btn-primary" %>
+    <%= link_to t('buttons.back'), user_profile_index_path, class: "btn btn-success"%>
+  </div>
+
+  <div class="field">
+    <%= user_profile.label :role %>
+    <%= user_profile.select(:role, [['Total',0], ['Parcial',1]]) %>
+  </div>
+<% end %>

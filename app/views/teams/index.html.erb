@@ -1,37 +1,59 @@
 <br/>
-<div class="basic-grey">
+<h2><center>Lista de equipes</center></h2>
+<br/>
+  <div class="col-sm-15" "panel panel-default">
 
-  <script>
-    $.notify("<%= notice %>", "success"); 
-  </script>
-
-  <h1><%= "#{t('messages.listing')} #{@teams.model.model_name.human(count: @teams.count)}" %></h1>
-
-  <table>
-    <thead>
-      <tr>
-        <th><%= @teams.model.human_attribute_name("description") %></th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @teams.each do |team| %>
-        <tr style="background: <%= cycle('white', '#f0f0f5') %>">
-          <td><%= team.description %></td>
-          <td><%= link_to t('buttons.edit'), edit_team_path(team) %></td>
-          <td><%= link_to t('buttons.destroy'), team, method: :delete, data: { confirm: t('messages.confirm') } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
-  <%= paginate @teams %>
-
-  <br>
-
-  <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %>
-  <%= link_to t('buttons.home'),root_path, class: "btn btn-success" %>
-</div>
+    <div class="col-sm-3" "panel-heading">
+      <ul class="nav nav-pills nav-stacked">
+      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
+      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
+      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
+      <li class="success"><a href="#">Projetos</a></li>
+      <li class="info"><a href="#">Relatórios</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9" "panel-body">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><center>Equipes</center></h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th><%= @teams.model.human_attribute_name("description") %></th>
+              <th colspan="2"></th>
+            </tr>
+          </thead>
+        <tbody>
+          <% @teams.each do |team| %>
+            <tr>
+              <td>
+                <%= team.description %>
+              </td>
+              <td>
+                <%= link_to "Visualizar", team_path(team) %>
+              </td>
+              <td>
+                <% if can? :update, Team %>
+                  <%= link_to t('buttons.edit'), edit_team_path(team) %>
+                <% end %>
+              </td>
+              <td>
+                <% if can? :destroy, Team %>
+                  <%= link_to t('buttons.destroy'), team, method: :delete, data: { confirm: t('messages.confirm') } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <%= paginate @teams %>
+      <br>
+      <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %> |
+      <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
+      </div>
+    </div>
+  </div>

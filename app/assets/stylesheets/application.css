@@ -15,3 +15,8 @@
  *= require_tree .
  *= require_self
  */
+
+ .paperclip {
+   border-radius: 100px; #deixar borda arredondada
+   box-shadow: 0 0 10px black; #sombreamento da imagem
+ }

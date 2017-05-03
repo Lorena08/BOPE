@@ -5,10 +5,29 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Devise i18n
+gem 'devise-i18n'
+# Devise
+gem 'devise'
+# Foreman
+gem 'foreman'
+#for profile picture
+gem "paperclip", "~> 5.0.0"
+#authorization
+gem "cancan"
+
+
+gem 'rails-assets-notifyjs', source: 'https://rails-assets.org'
+gem 'kaminari-i18n'
+gem 'kaminari'
+gem 'cocoon'
+gem 'lerolero_generator'
+gem 'faker'
+gem "will_paginate", "~> 3.0.4", :require => nil
+gem 'rails-i18n', '~> 5.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
-gem 'rails-i18n', '~> 5.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use Puma as the app server
@@ -24,15 +43,7 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'rails-assets-bootstrap', source: 'https://rails-assets.org'
 
-
-gem 'rails-assets-notifyjs', source: 'https://rails-assets.org'
-gem 'kaminari-i18n'
-gem 'kaminari'
-gem 'cocoon'
-gem 'lerolero_generator'
-gem 'faker'
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem "will_paginate", "~> 3.0.4", :require => nil
 gem 'rails_12factor'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
 
@@ -58,6 +69,8 @@ group :development, :test do
 end
 
 group :development do
+  # Betters Errors
+  gem 'better_errors'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'

@@ -1,0 +1,11 @@
+<div class='field'>
+  <%= hidden_field_tag  'users_id[]' %>
+  <%= select(:team_user, 'users_id[]',
+             User.all.collect {|u| [ u.user_profile.name, u.id ] },
+             {include_blank: '-- Selecione um usuário --'},
+             {onchange: 'users_ids(this)'}) %>
+  <a href='#' onclick='removeSelect(this)'>Remover</a>
+  <br>
+</div>
+
+<span id="add"></span>

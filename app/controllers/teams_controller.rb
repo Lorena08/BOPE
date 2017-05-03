@@ -1,16 +1,20 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
-  http_basic_authenticate_with name: "lorena", password: "avrilsc90", only: [:edit, :update, :destroy]
+  #http_basic_authenticate_with name: "lorena", password: "avrilsc90", only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
 
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.page(params[:page]).per(15)
+    @teams = Team.order(:description).page(params[:page]).per(5)
   end
 
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @team = Team.find(params[:id])
   end
 
   # GET /teams/new
@@ -29,7 +33,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to teams_path, notice: I18n.t('messages.created') }
+        format.html { redirect_to team_path, notice: I18n.t('messages.created') }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new }
@@ -70,6 +74,6 @@ class TeamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_params
-      params.require(:team).permit(:description)
+      params.require(:team).permit(:id, :description)
     end
 end

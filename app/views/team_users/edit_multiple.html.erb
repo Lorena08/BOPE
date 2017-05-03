@@ -1,0 +1,53 @@
+<br/>
+<%= form_for(:team_user, url: team_users_update_multiple_path, html: { class: "basic-grey", method: :put }) do |f| %>
+
+  <h1>
+    <%= @team.description %>
+  </h1>
+  <%= hidden_field_tag("team_id", @team.id) %>
+
+  <% for user in @team.users %>
+    <div class="field">
+      <%= hidden_field_tag  "users_id[]", user.id %>
+      <%= f.select("users_id[]",
+                   User.all.collect {|u| [ u.user_profile.name, u.id ] },
+                   {selected: user.id},
+                   {onchange: 'users_ids(this)'}) %>
+      <a href="#" class="btn btn-default" onclick="removeSelect(this)">Remover</a>
+      <br>
+    </div>
+  <% end %>
+
+  <span id="add"></span>
+
+  <a href="#" class="btn btn-default" onclick="addSelect(this)">Adicionar</a>
+
+  <br><br>
+
+  <div class="field">
+    <%= f.submit t('buttons.save'), class: "btn btn-primary" %>
+    <%= link_to t('buttons.back'), teams_path, class: "btn btn-success"%>
+  </div>
+
+<% end %>
+
+<script>
+  function users_ids(select){
+    var selectedIndex = select.options.selectedIndex;
+    var value = select.options[selectedIndex].value;
+    var hidden_field = select.closest('div.field').firstElementChild;
+    hidden_field.value = value;
+    alert(hidden_field.value);
+  };
+
+  function removeSelect(link){
+    var div = link.closest('div.field');
+
+    confirm('Tem certeza?') ? div.remove() : "";
+    // div.remove();
+  };
+
+  function addSelect(link){
+    $('#add').replaceWith("<%= j (render ('select_team_users')) %>");
+  };
+</script>

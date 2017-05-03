@@ -5,3 +5,19 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+puts "Gerando USUÁRIO PADRÃO..."
+
+user = User.create!(
+        email: 'admin@admin.com',
+        password: 123456,
+        password_confirmation: 123456
+      )
+UserProfile.create!(
+  name: 'Usuário Padrão',
+  student_number: Faker::Number.number(10),
+  role: 0,
+  user_id: user.id
+)
+
+puts "Gerando USUÁRIO PADRÃO... [OK]"
