@@ -15,6 +15,8 @@ gem 'foreman'
 gem "paperclip", "~> 5.0.0"
 #authorization
 gem "cancan"
+# gem para gerar sentenças
+gem 'lerolero_generator'
 
 
 gem 'rails-assets-notifyjs', source: 'https://rails-assets.org'

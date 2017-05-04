@@ -13,14 +13,14 @@
                    User.all.collect {|u| [ u.user_profile.name, u.id ] },
                    {selected: user.id},
                    {onchange: 'users_ids(this)'}) %>
-      <a href="#" class="btn btn-default" onclick="removeSelect(this)">Remover</a>
+      <a class="btn btn-default" onclick="removeSelect(this)">Remover</a>
       <br>
     </div>
   <% end %>
 
   <span id="add"></span>
 
-  <a href="#" class="btn btn-default" onclick="addSelect(this)">Adicionar</a>
+  <a class="btn btn-default" onclick="addSelect(this)">Adicionar</a>
 
   <br><br>
 
@@ -37,7 +37,6 @@
     var value = select.options[selectedIndex].value;
     var hidden_field = select.closest('div.field').firstElementChild;
     hidden_field.value = value;
-    alert(hidden_field.value);
   };
 
   function removeSelect(link){

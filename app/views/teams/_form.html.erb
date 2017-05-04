@@ -25,6 +25,7 @@
       <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
       <li class="success"><a href="#">Projetos</a></li>
       <li class="info"><a href="#">Relatórios</a></li>
+      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
       </ul>
     </div>
     <div class="col-sm-9" "panel-body">
@@ -40,7 +41,7 @@
             <div class="form-group">
               <label for="inputDescription" class="col-lg-4 control-label">Descrição: </label>
               <div class="col-lg-40">
-                <%= f.text_field :description, required:true %>
+                <%= f.text_field :description %>
               </div>
             </div>
       </div>

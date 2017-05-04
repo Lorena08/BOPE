@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
+  get 'sprints/index'
+
+  get 'sprints/show'
+
+  get 'sprints/new'
+
+  get 'sprints/edit'
+
   devise_for :users
   resources :teams
   resources :user_profile
+  resources :sprints
 
   post 'team_users/edit_multiple'
   put 'team_users/update_multiple'

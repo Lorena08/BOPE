@@ -16,6 +16,6 @@ class User < ApplicationRecord
 
 
   # Nested Attributes
-  accepts_nested_attributes_for :user_profile, allow_destroy: true
+  accepts_nested_attributes_for :user_profile, allow_destroy: true # formulario alinhado (ser_profile+user)
 
 end

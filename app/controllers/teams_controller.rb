@@ -2,6 +2,14 @@ class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   #http_basic_authenticate_with name: "lorena", password: "avrilsc90", only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+
+
+  before_action do
+   resource = controller_name.singularize.to_sym
+   method = "#{resource}_params"
+   params[resource] &&= send(method) if respond_to?(method, true)
+  end
+
   load_and_authorize_resource
 
 
@@ -33,7 +41,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to team_path, notice: I18n.t('messages.created') }
+        format.html { redirect_to team_path(@team), notice: I18n.t('messages.created') }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new }

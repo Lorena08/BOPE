@@ -1,7 +1,5 @@
 <br/>
-<%= form_tag team_users_edit_multiple_path do %>
-
-  <h2><center>Visualização da equipe</center></h2>
+  <h2><center>Visualização da Sprint</center></h2>
 <br/>
   <div class="col-sm-15" "panel panel-default">
     <div class="col-sm-3" "panel-heading">
@@ -14,7 +12,7 @@
       <li class="warning"><%= link_to "Sprints", sprints_path %></li>
       </ul>
     </div>
-    <div class="col-sm-6" "panel-body">
+    <div class="col-sm-9" "panel-body">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title"><center>Informações</center></h3>
@@ -24,25 +22,28 @@
         <table class="table table-striped table-hover ">
           <thead>
             <tr>
-              <th>Descrição: <%= @team.description %></th>
+              <th>Descrição: <%= @sprint.description %></th>
             </tr>
             <tr>
-              <th><%= hidden_field_tag "team_id", @team.id %>
-                Usuários:<% @team.users.each do |user| %>
-                  <li><%= user.user_profile.name %></li>
-                <% end %>
-              </th>
+              <th>Inicio: <%=  l(@sprint.inicio) %></th>
+            </tr>
+            <tr>
+              <th>Fim: <%=  l(@sprint.fim) %></th>
+            </tr>
+            <tr>
+              <th>Pontos cadastrados: <%=  @sprint.pontos_cadastrados %></th>
+            </tr>
+            <tr>
+              <th>Pontos atualizados: <%=  @sprint.pontos_atualizados %></th>
             </tr>
           </thead>
       </table>
     </div>
-      <% if can? :update, Team %>
-        <%= link_to t('buttons.edit'), edit_team_path, class: "btn btn-primary" %> |
-        <%= submit_tag "Editar usuários da equipe", class: "btn btn-default" %> |
+      <% if can? :update, Sprint %>
+        <%= link_to t('buttons.edit'), edit_sprint_path(@sprint), class: "btn btn-primary" %> |
       <% end %>
-      <%= link_to t('buttons.back'),teams_path, class: "btn btn-success" %>
+      <%= link_to t('buttons.back'), sprints_path, class: "btn btn-success" %>
 
 
     </div>
   </div>
-  <% end %>

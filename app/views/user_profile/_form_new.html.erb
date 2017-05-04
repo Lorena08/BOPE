@@ -1,7 +1,6 @@
 <br/>
-<%= form_for(@user, url: user_profile_index_path, method: :post, html: { class: "basic-grey" , multipart: true }) do |f| %>
+<%= form_for(@user, url: user_profile_index_path, html: { class: "basic-grey" , multipart: true }) do |f| %>
   <h1><%= @user.model_name.human %></h1>
-
 
 
   <% if @user.errors.any? %>
@@ -18,42 +17,46 @@
 
   <div class="field">
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.email_field :email, class: 'form-control', required: true %>
   </div>
 
   <div class="field">
     <label><%= f.label :password %></label>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, class: 'form-control', minlength: 6, required: true %>
   </div>
 
   <div class="field">
     <label><%= f.label :password_confirmation %></label>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, minlength: 6, class: 'form-control', required: true %>
   </div>
 
   <%= f.fields_for :user_profile do |user_profile| %>
     <div class="field">
       <%= user_profile.label :student_number %>
-      <%= user_profile.text_field :student_number %>
+      <%= user_profile.text_field :student_number, class: 'form-control', maxlength: 10, required: true %>
     </div>
 
     <div class="field">
       <%= user_profile.label :name %>
-      <%= user_profile.text_field :name %>
+      <%= user_profile.text_field :name, class: 'form-control', required: true %>
     </div>
 
     <div class="field">
       <%= user_profile.file_field :picture %>
     </div>
+  
+
+  <div class="field">
+    <%= user_profile.select(:role, ['Total', 'Parcial']) %>
+  </div>
+
   <% end %>
+
+<br>
 
   <div class="field">
     <%= f.submit t('buttons.save'), class: "btn btn-primary" %>
     <%= link_to t('buttons.back'), user_profile_index_path, class: "btn btn-success"%>
   </div>
 
-  <div class="field">
-    <%= user_profile.label :role %>
-    <%= user_profile.select(:role, [['Total',0], ['Parcial',1]]) %>
-  </div>
 <% end %>

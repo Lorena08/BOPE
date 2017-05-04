@@ -13,6 +13,7 @@ namespace :dev do
     puts %x(rails dev:generate_users)
     puts %x(rails dev:generate_teams)
     puts %x(rails dev:generate_team_user)
+    puts %x(rails dev:generate_sprints)
 
   end
 #---------------------------------------------------#
@@ -70,6 +71,23 @@ task generate_team_user: :environment do
     end
 
     puts "Gerando a relação entre USÁRIOS e EQUIPES... [OK]"
+  end
+#---------------------------------------------------#
+task generate_sprints: :environment do
+
+    puts "Gerando os SPRINTS..."
+
+    10.times do
+      Sprint.create!(
+        description: LeroleroGenerator.sentence, #gera sentenças
+        inicio: Faker::Date.between(Date.today, 3.month.from_now), #gera datas aleatorias entre hoje e 3 meses (a partir de hoje)
+        fim: Faker::Date.between(3.month.from_now, 6.month.from_now), ##gera datas aleatorias entre 3 meses a partir de hoje e 6 meses (a partir de hoje)
+        pontos_cadastrados: Random.rand(0..25) # gera numeros alaetorios entre 0 e 25
+        # pontos_atualizados:
+        )
+    end
+
+    puts "Gerando os SPRINTS... [OK]"
   end
 #---------------------------------------------------#
 
