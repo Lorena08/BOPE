@@ -53,7 +53,9 @@
       <br>
       <%= paginate @teams %>
       <br>
-      <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %> |
+      <% if can? :create, Team %>
+        <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %> |
+      <% end %>
       <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
       </div>
     </div>

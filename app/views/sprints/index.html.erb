@@ -57,8 +57,11 @@
       <br>
       <%= paginate @sprints %>
       <br>
-      <%= link_to t('buttons.new'), new_sprint_path, class: "btn btn-primary" %> |
+      <% if can? :create, Sprint %>
+        <%= link_to t('buttons.new'), new_sprint_path, class: "btn btn-primary" %> |
+      <% end %>
       <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
+
       </div>
     </div>
   </div>
