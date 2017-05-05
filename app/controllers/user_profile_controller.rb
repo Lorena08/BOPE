@@ -20,7 +20,7 @@ class UserProfileController < ApplicationController
     @user_created = @user.user_profile.name
 
     if @user.save
-      redirect_to user_profile_index_path, notice: "Usuário [#{@user_created}] criado com sucesso!"
+      redirect_to user_profile_path(@user), notice: "Usuário [#{@user_created}] criado com sucesso!"
     else
       render :new
     end

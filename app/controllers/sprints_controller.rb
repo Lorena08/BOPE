@@ -18,7 +18,7 @@ class SprintsController < ApplicationController
 
   def create
     @sprint = Sprint.new(sprint_params)
-    if @sprint.save!
+    if @sprint.save
       redirect_to sprint_path(@sprint), notice: "Sprint criado com sucesso!"
     else
       render :new

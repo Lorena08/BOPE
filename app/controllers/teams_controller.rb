@@ -55,7 +55,7 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to teams_path, notice: I18n.t('messages.updated') }
+        format.html { redirect_to team_path, notice: I18n.t('messages.updated') }
         format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }
