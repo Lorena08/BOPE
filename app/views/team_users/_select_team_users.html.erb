@@ -1,11 +1,13 @@
-<div class='field'>
+<div class="form-group">
+  <div class="col-lg-5">
   <%= hidden_field_tag  'users_id[]' %>
   <%= select(:team_user, 'users_id[]',
              User.all.collect {|u| [ u.user_profile.name, u.id ] },
              {include_blank: '-- Selecione um usuário --'},
-             {onchange: 'users_ids(this)'}) %>
+             {onchange: 'users_ids(this)', class: "form-control"}) %>
   <a  onclick='removeSelect(this)' class="btn btn-default" >Remover</a>
   <br>
+  </div>
 </div>
 
 <span id="add"></span>
