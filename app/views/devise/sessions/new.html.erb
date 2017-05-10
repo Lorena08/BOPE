@@ -4,44 +4,43 @@
   $.notify("<%= alert %>", "warn");
 </script>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <form class="form-horizontal">
-    <fieldset>
-      <head><h1><center><legend>Sistema Bope</legend></center></h1></head>
-  <body>
-  <div class="form-group">
-    <label for="inputEmail" class="col-lg-2 control-label">E-mail</label>
-    <div class="col-lg-20">
-      <%= f.email_field :email, autofocus: true %>
-    </div>
+<div class="outer">
+  <div class="well bs-component col-lg-6 inner">
+    <br>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
+
+      <fieldset>
+
+        <div class="form-group">
+          <label class="col-lg-2 control-label">E-mail</label>
+          <div class="col-lg-9">
+            <%= f.email_field :email, class: 'form-control', autofocus: true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-lg-2 control-label">Senha</label>
+          <div class="col-lg-9">
+            <%= f.password_field :password, class: 'form-control', autocomplete: "off" %>
+
+            <div class="checkbox">
+              <% if devise_mapping.rememberable? -%>
+                <label>
+                  <%= f.check_box :remember_me %> Lembre-se de mim
+                </label>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 20px;">
+          <div class="col-lg-2 col-lg-offset-2">
+            <%= f.button :Entrar, class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+    <br>
   </div>
-  <div class="form-group">
-    <label for="inputPassword" class="col-lg-2 control-label">Senha</label>
-    <div class="col-lg-20">
-      <%= f.password_field :password, autocomplete: "off" %>
-    </div>
-  </div>
-
-  <p>
-
-
-    <% if devise_mapping.rememberable? -%>
-      <div class="col-lg-2 control-label">
-
-          <%= f.check_box :remember_me %>
-
-          <%= f.label :remember_me %>
-    </div>
-    <% end -%>
-
-</body>
-</br>
-<%= f.button :Entrar, class: 'btn btn-primary' %>
-<%#= <%= render "devise/shared/links" %>
-</fieldset>
-
-</form>
-</br>
-
-
-<% end %>
+</div>

@@ -1,49 +1,27 @@
-<br/>
-  <h2><center>Visualização da Sprint</center></h2>
-<br/>
-  <div class="col-sm-15 panel panel-default">
-    <div class="col-sm-3 panel-body">
-      <ul class="nav nav-pills nav-stacked">
-      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
-      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
-      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
-      <li class="success"><a href="#">Projetos</a></li>
-      <li class="info"><a href="#">Relatórios</a></li>
-      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
-      </ul>
-    </div>
-    <div class="col-sm-9 panel-body">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><center>Informações</center></h3>
-        </div>
+<div class="col-sm-9">
+  <div class="panel">
+
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Visualização da Sprint</center></h3>
       </div>
-      <div class="panel-body">
-        <table class="table table-striped table-hover ">
-          <thead>
-            <tr>
-              <th>Descrição: <%= @sprint.description %></th>
-            </tr>
-            <tr>
-              <th>Inicio: <%=  l(@sprint.inicio) %></th>
-            </tr>
-            <tr>
-              <th>Fim: <%=  l(@sprint.fim) %></th>
-            </tr>
-            <tr>
-              <th>Pontos cadastrados: <%=  @sprint.pontos_cadastrados %></th>
-            </tr>
-            <tr>
-              <th>Pontos atualizados: <%=  @sprint.pontos_atualizados %></th>
-            </tr>
-          </thead>
-      </table>
     </div>
+
+    <div class="panel-body">
+      <span class="title">Descrição:</span> <%= @sprint.description %><br>
+      <span class="title">Inicio:</span> <%=  l(@sprint.inicio) %><br>
+      <span class="title">Fim:</span> <%=  l(@sprint.fim) %><br>
+      <span class="title">Pontos cadastrados:</span> <%=  @sprint.pontos_cadastrados %><br>
+      <span class="title">Pontos atualizados:</span> <%=  @sprint.pontos_atualizados %><br>
+
+      <br><br>
+
       <% if can? :update, Sprint %>
         <%= link_to t('buttons.edit'), edit_sprint_path(@sprint), class: "btn btn-primary" %> |
       <% end %>
       <%= link_to t('buttons.back'), sprints_path, class: "btn btn-success" %>
 
-
     </div>
+
   </div>
+</div>

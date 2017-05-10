@@ -1,7 +1,5 @@
 class UserProfileController < ApplicationController
 
-  before_action :authenticate_user!
-
   def index
     @users = UserProfile.order(:name).page(params[:page]).per(5)
   end

@@ -1,32 +1,22 @@
-<br/>
-<h2><center>Lista de equipes</center></h2>
-<br/>
-  <div class="col-sm-15 panel panel-default">
+<div class="col-sm-9">
+  <div class="panel">
 
-    <div class="col-sm-3 panel-body">
-      <ul class="nav nav-pills nav-stacked">
-      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
-      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
-      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
-      <li class="success"><a href="#">Projetos</a></li>
-      <li class="info"><a href="#">Relatórios</a></li>
-      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
-      </ul>
-    </div>
-    <div class="col-sm-9 panel-body">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><center>Equipes</center></h3>
-        </div>
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Lista de equipes</center></h3>
       </div>
-      <div class="panel-body">
-        <table class="table table-striped table-hover ">
-          <thead>
-            <tr>
-              <th><%= @teams.model.human_attribute_name("description") %></th>
-              <th colspan="2"></th>
-            </tr>
-          </thead>
+    </div>
+
+    <div class="panel-body">
+      <table class="table table-striped table-hover ">
+
+        <thead>
+          <tr>
+            <th><%= @teams.model.human_attribute_name("description") %></th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
         <tbody>
           <% @teams.each do |team| %>
             <tr>
@@ -49,14 +39,16 @@
             </tr>
           <% end %>
         </tbody>
+
       </table>
-      <br>
-      <%= paginate @teams %>
-      <br>
+
+      <center><%= paginate @teams %></center>
+
       <% if can? :create, Team %>
         <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %> |
       <% end %>
       <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
-      </div>
+
     </div>
   </div>
+</div>

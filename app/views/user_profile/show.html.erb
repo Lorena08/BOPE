@@ -1,43 +1,78 @@
-<br/>
-  <h2><center>Visualização do usuário</center></h2>
-<br/>
-  <div class="col-sm-15 panel panel-default">
-    <div class="col-sm-3 panel-body">
-      <ul class="nav nav-pills nav-stacked">
-      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
-      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
-      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
-      <li class="success"><a href="#">Projetos</a></li>
-      <li class="info"><a href="#">Relatórios</a></li>
-      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
-      </ul>
-    </div>
-    <div class="col-sm-9 panel-body">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><center>Informações</center></h3>
-        </div>
+<div class="col-sm-9">
+  <div class="panel">
+
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Visualização do usuário</center></h3>
       </div>
-      <div class="panel-body">
-        <table class="table table-striped table-hover ">
-          <thead>
-            <tr>
-              <th colspan="3"><center><%= image_tag @user.user_profile.picture.url(:thumb), class: "paperclip" %>
-                                      <span style="margin-left: 20px"><%= @user.user_profile.name %></center></th></span>
-            </tr>
-          </thead>
+    </div>
+
+    <div class="panel-body">
+      <table class="table table-striped ">
+
+        <thead>
+          <tr>
+            <th colspan="4">
+              <center>
+
+                <div class="paperclip-div">
+                  <%= image_tag @user.user_profile.picture.url, class: 'paperclip-img' %>
+                </div>
+
+                <span style="margin-left: 20px; font-size: 16pt; ">
+                  <%= @user.user_profile.name %>
+                </span>
+
+              </center>
+            </th>
+          </tr>
+
+        </thead>
+
         <tbody>
             <tr>
-              <td width="250"><center>E-mail: <%= @user.email %></center></td>
-              <td width="250"><center>Matrícula: <%= @user.user_profile.student_number %></center></td>
-              <td width="250"><center>Acesso: <%= @user.user_profile.role %></center></td>
+
+              <td>
+                <center>
+                  <b>E-mail:</b> <%= @user.email %>
+                </center>
+              </td>
+
+              <td>
+                <center>
+                  <b>Matrícula:</b> <%= @user.user_profile.student_number %>
+                </center>
+              </td>
+
+              <td>
+                <center>
+                  <b>Acesso:</b> <%= @user.user_profile.role %>
+                </center>
+              </td>
+
+              <td>
+                <center>
+                  <b>Equipe(s):</b>
+                    <% @user.teams.each do |team| %>
+                      <% if team == @user.teams.last %>
+                        <%= team.description %>
+                      <% else %>
+                        <%= team.description %>,
+                      <% end %>
+                    <% end %>
+                </center>
+              </td>
             </tr>
         </tbody>
+
       </table>
-    </div>
+
+      <br>
+
       <%= link_to t('buttons.edit'), edit_user_profile_path(@user), class: "btn btn-primary" %> |
       <%= link_to t('buttons.back'),user_profile_index_path, class: "btn btn-success" %>
 
-
     </div>
+
   </div>
+</div>

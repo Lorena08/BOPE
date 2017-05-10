@@ -30,6 +30,6 @@ class TeamUsersController < ApplicationController
       end
     end
 
-    redirect_to team_path(@team), notice: 'Registro atualizado com sucesso'
+    redirect_to team_path(@team), notice: "Equipe [#{@team.description}] atualizada com sucesso!"
   end
 end

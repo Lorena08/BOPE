@@ -5,11 +5,14 @@ pt-BR:
       team: Equipe
     attributes:
       user:
-        name: Nome
         email: E-mail
         password: Senha
         confirmation_password: Confirme sua senha
-        student_number: Matrícula
         access: Acesso
+      user_profile:
+        student_number: Matrícula
+        name: Nome
       team:
+        description: Descrição
+      sprint:
         description: Descrição

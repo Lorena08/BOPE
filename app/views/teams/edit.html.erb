@@ -1,57 +1,50 @@
-<br/>
-  <h2><center>Editar equipe</center></h2>
-<br/>
-<%= form_for(@team) do |f| %>
+<div class="col-sm-9">
+  <div class="panel">
 
-  <% if @team.errors.any? %>
-    <div id="error_explanation">
-      <div class="alert alert-dismissible alert-danger">
-        <p><h5> <%= "Existe(m) #{pluralize(@team.errors.count, 'erro(s)')} no formulário:" %></h5></p>
-      <ul>
-      <% @team.errors.full_messages.each do |message| %>
-          <h6><li><%= message %></li></p></h6>
-      <% end %>
-      </ul>
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Editar equipe</center></h3>
       </div>
     </div>
-    <br>
-  <% end %>
 
-  <div class="col-sm-15 panel panel-default">
-    <div class="col-sm-3 panel-body">
-      <ul class="nav nav-pills nav-stacked">
-      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
-      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
-      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
-      <li class="success"><a href="#">Projetos</a></li>
-      <li class="info"><a href="#">Relatórios</a></li>
-      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
-      </ul>
-    </div>
-    <div class="col-sm-9 panel-body">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><center>Equipe</center></h3>
-        </div>
-      </div>
-      <div class="panel-body">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend><center>Informações</center></legend>
-            <div class="form-group">
-              <label for="inputDescription" class="col-lg-4 control-label">Descrição: </label>
-              <div class="col-lg-40">
-                <%= f.text_field :description %>
-              </div>
+    <div class="panel-body">
+
+      <!-- <form class="form-horizontal"> -->
+      <%= form_for(@team, html: {class: 'form-horizontal'}) do |f| %>
+
+        <% if @team.errors.any? %>
+          <div id="error_explanation">
+            <div class="alert alert-dismissible alert-danger">
+              <p><h5> <%= "Existe(m) #{pluralize(@team.errors.count, 'erro(s)')} no formulário:" %></h5></p>
+              <ul>
+                <% @team.errors.full_messages.each do |message| %>
+                    <li><h6><%= message %></h6></li>
+                <% end %>
+              </ul>
             </div>
-          </fieldset>
-        </form>
-      </div>
+          </div>
+          <br>
+        <% end %>
 
-      <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
-      <%= link_to t('buttons.back'), teams_path, class: "btn btn-success" %>
+        <fieldset>
 
+          <div class="form-group">
+            <label class="col-lg-2 control-label">Descrição: </label>
+            <div class="col-lg-8">
+              <%= f.text_field :description, class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-8 col-lg-offset-2">
+              <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
+              <%= link_to t('buttons.back'), teams_path, class: "btn btn-success" %>
+            </div>
+          </div>
+
+        </fieldset>
+
+      <% end %>
     </div>
   </div>
-
-<% end %>
+</div>

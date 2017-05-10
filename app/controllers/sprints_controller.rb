@@ -18,8 +18,10 @@ class SprintsController < ApplicationController
 
   def create
     @sprint = Sprint.new(sprint_params)
+    @sprint_created = @sprint.description
+
     if @sprint.save
-      redirect_to sprint_path(@sprint), notice: "Sprint criado com sucesso!"
+      redirect_to sprint_path(@sprint), notice: "[#{@sprint_created}] criada com sucesso!"
     else
       render :new
     end
@@ -28,7 +30,7 @@ class SprintsController < ApplicationController
   def update
     @sprint = Sprint.find(params[:id])
     if @sprint.update(sprint_params)
-      redirect_to sprint_path(@sprint), notice: "Sprint atualizado com sucesso!"
+      redirect_to sprint_path(@sprint), notice: "[#{@sprint.description}] atualizada com sucesso!"
     else
       render :edit
     end
@@ -36,10 +38,12 @@ class SprintsController < ApplicationController
 
   def destroy
     @sprint = Sprint.find(params[:id])
+    @sprint_deleted = @sprint.description
+
     if @sprint.destroy
-      redirect_to sprints_path, notice: "Sprint deletado com sucesso!"
+      redirect_to sprints_path, notice: "[#{@sprint_deleted}] deletada com sucesso!"
     else
-      redirect_to sprints_path, notice: "Erro ao deletar o Sprint..."
+      redirect_to sprints_path, notice: "Erro ao deletar o Sprint [#{@sprint_deleted}]..."
     end
   end
 

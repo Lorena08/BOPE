@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  get 'sprints/index'
+  # get 'sprints/index'
 
-  get 'sprints/show'
+  # get 'sprints/show'
 
-  get 'sprints/new'
+  # get 'sprints/new'
 
-  get 'sprints/edit'
+  # get 'sprints/edit'
 
   devise_for :users
   resources :teams

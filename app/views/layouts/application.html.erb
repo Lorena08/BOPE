@@ -14,7 +14,17 @@
 </head>
 <body>
 
-<%= yield %>
+  <div class="container">
+
+      <%= render partial: 'layouts/shared_application/header' %> <%# cabeçalho para todas as paginas exceto para a pagina de login%>
+
+      <br/>
+      <div class="col-lg-12">
+        <%= render partial: 'layouts/shared_application/aside_bar' %> <%# barra lateral esquerda para todas as paginas exceto para a pagina de login%>
+        <%= yield %> <%# pega o quero especificamente (ex:usuario, equipe...)%>
+      </div>
+
+    </div>
 
 <script>
     $.notify("<%= notice %>", "success");
