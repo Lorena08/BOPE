@@ -1,4 +1,5 @@
 class SprintsController < ApplicationController
+  
   def index
     @sprints = Sprint.all.order(created_at: :desc).page(params[:page]).per(10) #lista toadas as Sprints em ordem da mais nova p/ mais velha
   end

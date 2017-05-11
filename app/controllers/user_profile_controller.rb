@@ -1,5 +1,6 @@
 class UserProfileController < ApplicationController
 
+  
   def index
     @users = UserProfile.order(:name).page(params[:page]).per(5)
   end

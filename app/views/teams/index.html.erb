@@ -12,7 +12,7 @@
 
         <thead>
           <tr>
-            <th><%= @teams.model.human_attribute_name("description") %></th>
+            <th><center><%= @teams.model.human_attribute_name("description") %></center></th>
             <th colspan="2"></th>
           </tr>
         </thead>
@@ -21,7 +21,7 @@
           <% @teams.each do |team| %>
             <tr>
               <td>
-                <%= team.description %>
+                <center><%= team.description %></center>
               </td>
               <td>
                 <%= link_to "Visualizar", team_path(team) %>

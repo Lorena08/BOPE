@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503220230) do
+ActiveRecord::Schema.define(version: 20170511010548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "project_sprints", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "sprint_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_sprints_on_project_id", using: :btree
+    t.index ["sprint_id"], name: "index_project_sprints_on_sprint_id", using: :btree
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "team_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["team_id"], name: "index_projects_on_team_id", using: :btree
+  end
 
   create_table "sprints", force: :cascade do |t|
     t.string   "description"
@@ -80,6 +97,9 @@ ActiveRecord::Schema.define(version: 20170503220230) do
     t.index ["user_id"], name: "index_users_teams_on_user_id", using: :btree
   end
 
+  add_foreign_key "project_sprints", "projects"
+  add_foreign_key "project_sprints", "sprints"
+  add_foreign_key "projects", "teams"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
   add_foreign_key "user_profiles", "users"

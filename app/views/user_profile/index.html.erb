@@ -12,9 +12,9 @@
 
         <thead>
           <tr>
-            <th>Matrícula</th>
-            <th>Nome</th>
-            <th>E-mail</th>
+            <th><center>Matrícula</center></th>
+            <th><center>Nome</center></th>
+            <th><center>E-mail</center></th>
             <th colspan="2"></th>
           </tr>
         </thead>
@@ -23,9 +23,9 @@
           <% @users.each do |user_profile| %>
             <tr>
 
-              <td><%= user_profile.student_number %></td>
-              <td><%= user_profile.name %></td>
-              <td><%= user_profile.user.email %></td>
+              <td><center><%= user_profile.student_number %></center></td>
+              <td><center><%= user_profile.name %></center></td>
+              <td><center><%= user_profile.user.email %></center></td>
 
               <td>
                 <%= link_to "Visualizar", user_profile_path(user_profile.user) %>
