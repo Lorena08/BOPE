@@ -111,12 +111,12 @@ pt-BR:
       exclusion: não está disponível
       inclusion: não está incluído na lista
       model_invalid: 'A validação falhou: %{errors}'
-    format: "O campo %{attribute} %{message}"
+    format: "O campo [%{attribute}] %{message}"
     messages:
       accepted: deve ser aceito
       blank: não pode ficar em branco
       present: deve ficar em branco
-      confirmation: não é igual ao campo %{attribute}
+      confirmation: não é igual ao campo [%{attribute}]
       empty: não pode ficar vazio
       equal_to: deve ser igual a %{count}
       even: deve ser par

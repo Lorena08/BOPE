@@ -7,8 +7,6 @@ module ApplicationHelper
       ""
     end
   end
-
-  # problema do cancan (load_and_authorize_resource)
   
 
 end

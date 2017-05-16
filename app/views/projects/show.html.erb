@@ -1,2 +1,30 @@
-<h1>Projects#show</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
+<div class="col-lg-9">
+  <div class="panel">
+
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Visualização do Projeto</center></h3>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <span class="title">Descrição:</span> <%= @project.description %> <br>
+      <span class="title">Equipe:</span> <%= @project.team.description %> <br>
+      <span class="title">Sprints:</span> <br>
+      <ul>
+        <% @project.sprints.each do |sprint| %>
+          <li><%= sprint.description %></li>
+        <% end %>
+      </ul>
+
+      <br><br>
+
+      <% if can? :update, Project %>
+        <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-primary" %> |
+      <% end %>
+      <%= link_to t('buttons.back'), projects_path, class: "btn btn-success" %>
+
+    </div>
+
+  </div>
+</div>

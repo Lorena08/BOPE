@@ -14,6 +14,8 @@ namespace :dev do
     puts %x(rails dev:generate_teams)
     puts %x(rails dev:generate_team_user)
     puts %x(rails dev:generate_sprints)
+    puts %x(rails dev:generate_projects)
+    puts %x(rails dev:generate_project_sprints)
 
   end
 #---------------------------------------------------#
@@ -88,6 +90,38 @@ task generate_sprints: :environment do
     end
 
     puts "Gerando os SPRINTS... [OK]"
+  end
+#---------------------------------------------------#
+
+task generate_projects: :environment do
+
+    puts "Gerando os PROJETOS..."
+
+    Team.all.each do |team|
+      Project.create!(
+        description: Faker::Lorem.sentence,
+        team_id: team.id
+        )
+    end
+
+    puts "Gerando os PROJETOS... [OK]"
+  end
+#---------------------------------------------------#
+
+  task generate_project_sprints: :environment do
+
+    puts "Gerando a relação entre PROJETOS e SPRINTS..."
+
+    Project.all.each do |project|
+      4.times do
+        ProjectSprint.create!(
+          project_id: project.id,
+          sprint_id: Sprint.all.sample.id
+          )
+      end
+    end
+
+    puts "Gerando a relação entre PROJETOS e SPRINTS... [OK]"
   end
 #---------------------------------------------------#
 

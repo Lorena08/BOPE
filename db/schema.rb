@@ -88,21 +88,10 @@ ActiveRecord::Schema.define(version: 20170511010548) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "users_teams", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "team_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_users_teams_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_users_teams_on_user_id", using: :btree
-  end
-
   add_foreign_key "project_sprints", "projects"
   add_foreign_key "project_sprints", "sprints"
   add_foreign_key "projects", "teams"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
   add_foreign_key "user_profiles", "users"
-  add_foreign_key "users_teams", "teams"
-  add_foreign_key "users_teams", "users"
 end

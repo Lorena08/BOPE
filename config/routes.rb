@@ -1,24 +1,12 @@
 Rails.application.routes.draw do
-  get 'projects/index'
 
-  get 'projects/show'
-
-  get 'projects/new'
-
-  get 'projects/edit'
-
-  # get 'sprints/index'
-
-  # get 'sprints/show'
-
-  # get 'sprints/new'
-
-  # get 'sprints/edit'
 
   devise_for :users
   resources :teams
   resources :user_profile
   resources :sprints
+  resources :projects
+
 
   post 'team_users/edit_multiple'
   put 'team_users/update_multiple'
