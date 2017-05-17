@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511010548) do
+ActiveRecord::Schema.define(version: 20170516013141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "pontos_planejados"
+    t.integer  "status_id"
+    t.integer  "label_id"
+    t.integer  "sprint_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["label_id"], name: "index_activities_on_label_id", using: :btree
+    t.index ["sprint_id"], name: "index_activities_on_sprint_id", using: :btree
+    t.index ["status_id"], name: "index_activities_on_status_id", using: :btree
+  end
+
+  create_table "colors", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "color_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["color_id"], name: "index_labels_on_color_id", using: :btree
+  end
 
   create_table "project_sprints", force: :cascade do |t|
     t.integer  "project_id"
@@ -40,6 +67,14 @@ ActiveRecord::Schema.define(version: 20170511010548) do
     t.integer  "pontos_atualizados"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "color_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["color_id"], name: "index_statuses_on_color_id", using: :btree
   end
 
   create_table "team_users", force: :cascade do |t|
@@ -88,9 +123,14 @@ ActiveRecord::Schema.define(version: 20170511010548) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "activities", "labels"
+  add_foreign_key "activities", "sprints"
+  add_foreign_key "activities", "statuses"
+  add_foreign_key "labels", "colors"
   add_foreign_key "project_sprints", "projects"
   add_foreign_key "project_sprints", "sprints"
   add_foreign_key "projects", "teams"
+  add_foreign_key "statuses", "colors"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
   add_foreign_key "user_profiles", "users"

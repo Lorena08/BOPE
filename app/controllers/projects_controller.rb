@@ -1,14 +1,32 @@
 class ProjectsController < ApplicationController
-  
+
   # Erro da gem Cancan (ActiveModel::ForbiddenAttributesError)
   before_action do
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"
     params[resource] &&= send(method) if respond_to?(method, true)
   end
+  load_and_authorize_resource
 
+  #index anterior
+  #def index
+  #  @projects = Project.all.order(created_at: :desc).page(params[:page]).per(10)
+  #end
+
+  #index alterado
   def index
-    @projects = Project.all.order(created_at: :desc).page(params[:page]).per(10)
+    if current_user_total?
+      @projects = Project.all.order(created_at: :desc).page(params[:page]).per(10)
+    else
+      ids = []
+      tus = TeamUser.where(user_id: current_user.id)
+      tus.each do |tu|
+        ids << tu.team_id
+      end
+
+      return @projects = Project.where(team_id: ids).order(created_at: :desc)
+                         .page(params[:page]).per(10)
+    end
   end
 
   def show

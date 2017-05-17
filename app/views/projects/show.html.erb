@@ -8,20 +8,74 @@
     </div>
 
     <div class="panel-body">
+
+      <%# adicionado %>
+      <% unless current_user_total? %>
+        <ul class="breadcrumb" style="background-color: #3e3b3b;">
+          <li><%= link_to "Projetos", projects_path %></li>
+        </ul>
+      <% end %>
+
       <span class="title">Descrição:</span> <%= @project.description %> <br>
       <span class="title">Equipe:</span> <%= @project.team.description %> <br>
-      <span class="title">Sprints:</span> <br>
-      <ul>
-        <% @project.sprints.each do |sprint| %>
-          <li><%= sprint.description %></li>
-        <% end %>
-      </ul>
+
+      <%# adicionado %>
+      <hr style="border-top-color: dimgray;">
+      <span class="title">Sprints:</span> <br><br>
+
+      <%# adicionado %>
+      <table class="table table-striped table-hover ">
+
+        <thead>
+          <tr>
+
+            <th>Descrição</th>
+            <th>Qtd. atividades</th>
+            <th>Pontos cadastrados</th>
+            <th width="150"></th>
+
+          </tr>
+        </thead>
+
+        <%# aeditado %>
+        <tbody>
+          <% @project.sprints.each do |sprint| %>
+            <tr>
+
+              <td>
+                <%= sprint.description %>
+              </td>
+
+              <td>
+                <%= sprint.activities.count %>
+              </td>
+
+              <td align="center">
+                <% pontos_cadastrados = 0 %>
+                <% sprint.activities.each do |activity| %>
+                  <% pontos_cadastrados += activity.pontos_cadastrados %>
+                <% end %>
+
+                <%= pontos_cadastrados %>
+              </td>
+
+              <td align="center">
+                <%= link_to "Visualizar", sprint_path(sprint, project: @project) %>
+              </td>
+
+            </tr>
+          <% end %>
+        </tbody>
+
+      </table>
 
       <br><br>
 
-      <% if can? :update, Project %>
-        <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-primary" %> |
-      <% end %>
+      <%# <% if can? :update, Project %>
+      <%#   <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-primary" %> |
+      <%# <% end %>
+
+
       <%= link_to t('buttons.back'), projects_path, class: "btn btn-success" %>
 
     </div>

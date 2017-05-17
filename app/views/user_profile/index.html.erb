@@ -31,17 +31,18 @@
                 <%= link_to "Visualizar", user_profile_path(user_profile.user) %>
               </td>
 
-              <td>
-                <% if can? :update, User %>
-                  <%= link_to t('buttons.edit'), edit_user_profile_path(user_profile.user) %>
-                <% end %>
-              </td>
 
-              <td>
-                <% if can? :destroy, User %>
+              <% if can? :update, User %>
+                <td>
+                  <%= link_to t('buttons.edit'), edit_user_profile_path(user_profile.user) %>
+                </td>
+              <% end %>
+
+              <% if can? :destroy, User %>
+                <td>
                   <%= link_to t('buttons.destroy'), user_profile_path(user_profile.user), method: :delete, data: { confirm: t('messages.confirm') } %>
-                <% end %>
-              </td>
+                </td>
+              <% end %>
 
             </tr>
           <% end %>
@@ -50,8 +51,7 @@
 
       <center><%= paginate @users %></center>
 
-      <%= link_to t('buttons.new'), new_user_profile_path, class: "btn btn-primary" %> |
-      <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
+      <%= link_to t('buttons.new'), new_user_profile_path, class: "btn btn-primary" %>
 
     </div>
   </div>

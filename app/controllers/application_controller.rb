@@ -5,10 +5,15 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  load_and_authorize_resource unless :home_controller?
-
-
   layout :layout_by_resource #pega o layout especifico
+
+
+  #load_and_authorize_resource unless :home_controller?
+
+  #adicionado
+  include ApplicationHelper
+
+
 
     private
 
@@ -20,12 +25,12 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def home_controller?
-      if params[:controller] == 'home'
-        true
-      else
-        false
-      end
-    end
+    #def home_controller?
+    #  if params[:controller] == 'home'
+    #    true
+    #  else
+    #    false
+    #  end
+    #end
 
 end

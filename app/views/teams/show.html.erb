@@ -10,17 +10,81 @@
       </div>
       <%# 13.5px %>
       <div class="panel-body">
-
         <span class="title"> Descrição: </span><%= @team.description %>
 
+        <br><br>
         <%= hidden_field_tag "team_id", @team.id %>
 
-        <h5>Usuários</h5>
+        <span class="title">Usuários:</span>
         <ul>
           <% @team.users.each do |user| %>
             <li><%= user.user_profile.name %></li>
           <% end %>
         </ul>
+
+        <%# adicionado %>
+        <hr style="border-top-color: dimgray;">
+        <span class="title">Projetos:</span> <br><br>
+
+        <table class="table table-striped table-hover ">
+
+          <thead>
+            <tr>
+
+              <th>Descrição</th>
+              <th>Qtd. sprints</th>
+              <th>Qtd. atividades</th>
+
+              <% unless current_user_total? %>
+                <th width="150"></th>
+              <% end %>
+
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @team.projects.each do |project| %>
+              <tr>
+
+                <td>
+                  <%= project.description %>
+                </td>
+
+                <td>
+                  <%= project.sprints.count %>
+                </td>
+
+                <td>
+                  <% activities_count = 0 %>
+                  <% project.sprints.each do |sprint| %>
+                    <% activities_count += sprint.activities.count %>
+                  <% end %>
+
+                  <%= activities_count %>
+                </td>
+
+                <%# editado %>
+                <td align="center">
+                  <%= link_to "Visualizar", project_path(project) %>
+                </td>
+
+                <% if can? :update, Team %>
+                  <td>
+                    <%= link_to t('buttons.edit'), edit_project_path(project) %>
+                  </td>
+                <% end %>
+
+                <% if can? :destroy, Sprint %>
+                  <td>
+                    <%= link_to t('buttons.destroy'), project_path(project), method: :delete, data: { confirm: t('messages.confirm') } %>
+                  </td>
+                <% end %>
+
+              </tr>
+            <% end %>
+          </tbody>
+
+        </table>
 
         <br><br>
 

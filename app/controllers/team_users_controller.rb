@@ -1,5 +1,7 @@
 class TeamUsersController < ApplicationController
 
+  load_and_authorize_resource
+
   def edit_multiple
     @team = Team.find(params[:team_id])
   end

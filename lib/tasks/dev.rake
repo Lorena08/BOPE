@@ -16,6 +16,10 @@ namespace :dev do
     puts %x(rails dev:generate_sprints)
     puts %x(rails dev:generate_projects)
     puts %x(rails dev:generate_project_sprints)
+    puts %x(rails dev:generate_colors)
+    puts %x(rails dev:generate_labels)
+    puts %x(rails dev:generate_statuses)
+    puts %x(rails dev:generate_activities)
 
   end
 #---------------------------------------------------#
@@ -44,22 +48,22 @@ namespace :dev do
   end
 #---------------------------------------------------#
 
-task generate_teams: :environment do
+  task generate_teams: :environment do
 
-  puts "Gerando EQUIPES FAKES..."
+    puts "Gerando EQUIPES FAKES..."
 
-  @teams_name = teams_name
+    @teams_name = teams_name
 
-  @teams_name.each do |name|
-    Team.create!(
-      description: name
-    )
+    @teams_name.each do |name|
+      Team.create!(
+        description: name
+      )
+    end
+
+    puts "Gerando EQUIPES FAKES... [OK]"
   end
-
-  puts "Gerando EQUIPES FAKES... [OK]"
-end
 #---------------------------------------------------#
-task generate_team_user: :environment do
+  task generate_team_user: :environment do
 
     puts "Gerando a relação entre USÁRIOS e EQUIPES..."
 
@@ -75,7 +79,7 @@ task generate_team_user: :environment do
     puts "Gerando a relação entre USÁRIOS e EQUIPES... [OK]"
   end
 #---------------------------------------------------#
-task generate_sprints: :environment do
+  task generate_sprints: :environment do
 
     puts "Gerando os SPRINTS..."
 
@@ -93,7 +97,7 @@ task generate_sprints: :environment do
   end
 #---------------------------------------------------#
 
-task generate_projects: :environment do
+  task generate_projects: :environment do
 
     puts "Gerando os PROJETOS..."
 
@@ -125,9 +129,86 @@ task generate_projects: :environment do
   end
 #---------------------------------------------------#
 
+  task generate_colors: :environment do
+
+    puts "Gerando as CORES..."
+
+    colors = colors_name
+    colors.each do |color|
+      Color.create!(
+        description: color
+      )
+    end
+
+    puts "Gerando as CORES... [OK]"
+  end
+#---------------------------------------------------#
+
+  task generate_labels: :environment do
+
+    puts "Gerando os RÓTULOS..."
+
+    Color.all.each do |color|
+      Label.create!(
+        description: Faker::Lorem.word,
+        color_id: color.id
+      )
+    end
+
+    puts "Gerando os RÓTULOS... [OK]"
+  end
+#---------------------------------------------------#
+
+  task generate_statuses: :environment do
+
+    puts "Gerando os STATUS..."
+
+    status_color = status_name_color
+
+    status_color.each do |status, color|
+      Status.create!(
+        description: status,
+        color_id: Color.where(description: color).first.id
+      )
+    end
+
+    puts "Gerando os STATUS... [OK]"
+  end
+#---------------------------------------------------#
+
+  task generate_activities: :environment do
+
+    puts "Gerando as ATIVIDADES..."
+
+    Sprint.all.each do |sprint|
+      Activity.create!(
+        description: LeroleroGenerator.sentence,
+        pontos_cadastrados: Random.rand(0..25),
+        status_id: Status.all.sample.id,
+        label_id: Label.all.sample.id,
+        sprint_id: sprint.id
+        )
+    end
+
+    puts "Gerando as ATIVIDADES... [OK]"
+  end
+#---------------------------------------------------#
   private
+
   def teams_name
     names = ['Azul', 'Vermelho', 'Amarelo', 'Preto']
   end
+
+  def colors_name
+    colors = ["Amarelo", "Verde", "Azul", "Branco"]
+  end
+
+  def status_name_color
+    status_color = [["Não iniciada", "Amarelo"],
+                    ["Em andamento", "Verde"],
+                    ["Validado", "Azul"],
+                    ["Aguardando validação", "Branco"]]
+  end
+
 
 end

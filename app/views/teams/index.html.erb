@@ -13,7 +13,13 @@
         <thead>
           <tr>
             <th><center><%= @teams.model.human_attribute_name("description") %></center></th>
-            <th colspan="2"></th>
+            <th>Qtd. projetos</th>
+
+            <%# adicionado %>
+            <% unless current_user_total? %>
+              <th  width="150"></th>
+            <% end %>
+
           </tr>
         </thead>
 
@@ -23,19 +29,28 @@
               <td>
                 <center><%= team.description %></center>
               </td>
+
+              <%# adicionado %>
+              <td>
+                <%= team.projects.count %>
+              </td>
+
               <td>
                 <%= link_to "Visualizar", team_path(team) %>
               </td>
-              <td>
-                <% if can? :update, Team %>
+
+              <% if can? :update, Team %>
+                <td>
                   <%= link_to t('buttons.edit'), edit_team_path(team) %>
-                <% end %>
-              </td>
-              <td>
-                <% if can? :destroy, Team %>
+                </td>
+              <% end %>
+
+              <% if can? :destroy, Team %>
+                <td>
                   <%= link_to t('buttons.destroy'), team, method: :delete, data: { confirm: t('messages.confirm') } %>
-                <% end %>
-              </td>
+                </td>
+              <% end %>
+
             </tr>
           <% end %>
         </tbody>
@@ -45,9 +60,8 @@
       <center><%= paginate @teams %></center>
 
       <% if can? :create, Team %>
-        <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %> |
+        <%= link_to t('buttons.new'), new_team_path, class: "btn btn-primary" %>
       <% end %>
-      <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
 
     </div>
   </div>

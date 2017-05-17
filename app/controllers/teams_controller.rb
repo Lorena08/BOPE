@@ -8,10 +8,22 @@ class TeamsController < ApplicationController
    params[resource] &&= send(method) if respond_to?(method, true)
   end
 
+  load_and_authorize_resource
+
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.order(:description).page(params[:page]).per(5)
+    if current_user_total?
+      @teams = Team.order(:description).page(params[:page]).per(5)
+    else
+      ids = []
+      tus = TeamUser.where(user_id: current_user.id)
+      tus.each do |tu|
+        ids << tu.team_id
+      end
+
+      return @teams = Team.where(id: ids).order(:description).page(params[:page]).per(5)
+    end
   end
 
   # GET /teams/1

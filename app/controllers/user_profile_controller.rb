@@ -1,5 +1,6 @@
 class UserProfileController < ApplicationController
 
+  load_and_authorize_resource
   
   def index
     @users = UserProfile.order(:name).page(params[:page]).per(5)

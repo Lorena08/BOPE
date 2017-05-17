@@ -1,0 +1,41 @@
+<div class="col-lg-9">
+  <div class="panel">
+
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Visualização da atividade</center></h3>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+    <%# adicionado %>
+      <ul class="breadcrumb" style="background-color: #3e3b3b;">
+        <li><%= link_to "Projeto", project_path(@project) %></li>
+        <li><%= link_to "Sprint", sprint_path(@sprint, project: @project) %></li>
+        <li class="active">Atividade</li>
+      </ul>
+
+      <span class="title">Descrição:</span> <%= @activity.description %> <br>
+      <span class="title">Pontos cadastrados:</span> <%= @activity.pontos_cadastrados %> <br>
+      <span class="title">Status:</span> <%= @activity.status.description %> <br>
+      <span class="title">Rótulo:</span> <%= @activity.label.blank? ? '-' : @activity.label.description %> <br>
+      <span class="title">Sprint:</span> <%= @activity.sprint.blank? ? '-' : @activity.sprint.description %>
+
+      <br><br><br>
+
+      <% if can? :update, Activity %>
+        <%= link_to t('buttons.edit'), edit_activity_path(@activity), class: "btn btn-primary" %> |
+      <% end %>
+
+      <%# editado %>
+      <% if current_user_total? %>
+        <%= link_to t('buttons.back'), activities_path, class: "btn btn-success" %>
+      <% else %>
+        <%= link_to t('buttons.back'), sprint_path(@sprint, project: @project), class: "btn btn-success" %>
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

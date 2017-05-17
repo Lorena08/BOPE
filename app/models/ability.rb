@@ -8,8 +8,13 @@ class Ability
        if user.user_profile.role == "Total"
          can :manage, :all
        else
-         can :read, :all
-         can :update, User
+         #can :read, :all
+         #can :update, User
+         can :read, UserProfile, id: user.id
+         can :update, UserProfile, self_managed: true
+         can :read, Project
+         can :read, Sprint
+         can :manage, Activity
        end
     #
     # The first argument to `can` is the action you are giving the user

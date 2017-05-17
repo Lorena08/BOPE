@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'bootstrap-glyphicons'
 # Devise i18n
 gem 'devise-i18n'
 # Devise
@@ -21,6 +22,7 @@ gem 'lerolero_generator'
 gem 'bootstrap-datepicker-rails'
 
 
+gem 'rails-assets-bootstrap', source: 'https://rails-assets.org'
 
 gem 'rails-assets-notifyjs', source: 'https://rails-assets.org'
 gem 'kaminari-i18n'
@@ -46,7 +48,6 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-gem 'rails-assets-bootstrap', source: 'https://rails-assets.org'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_12factor'
