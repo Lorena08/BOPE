@@ -27,6 +27,5 @@ module ApplicationHelper
   def current_user_total?
     current_user.user_profile.role == 'Total' ? true : false
   end
-
-
+  
 end

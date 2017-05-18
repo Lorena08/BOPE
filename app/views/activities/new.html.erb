@@ -52,17 +52,10 @@
             <div class="form-group">
               <label class="col-lg-2 control-label">Status: </label>
               <div class="col-lg-6">
-                <% if current_user_total? %>
                   <%= f.select(:status_id,
                           Status.all.collect {|s| [ s.description, s.id ] },
                           {},
                           {class: "form-control"}) %>
-                <% else %>
-                  <%= f.select(:status_id,
-                          Status.all.collect {|s| [ s.description, s.id ] },
-                          {selected: @sprint},
-                          {class: "form-control"}) %>
-                <% end %>
               </div>
             </div>
 
@@ -77,14 +70,38 @@
             </div>
 
             <div class="form-group">
-              <label class="col-lg-2 control-label">Sprint: </label>
-              <div class="col-lg-6">
-                <%= f.select(:sprint_id,
-                        Sprint.all.collect {|s| [ s.description, s.id ] },
-                        {},
-                        {class: "form-control"}) %>
+                <label class="col-lg-2 control-label">Projeto: </label>
+                <div class="col-lg-6">
+                  <% if current_user_total? %>
+                    <%= f.select(:project_id,
+                            Project.all.collect {|p| [ truncate(p.description, length: 50), p.id ] },
+                            {},
+                            {class: "form-control"}) %>
+                  <% else %>
+                    <%= f.select(:project_id,
+                            Project.all.collect {|p| [ truncate(p.description, length: 50), p.id ] },
+                            {selected: @project.id},
+                            {class: "form-control"}) %>
+                  <% end %>
+                </div>
               </div>
-            </div>
+
+              <div class="form-group">
+                <label class="col-lg-2 control-label">Sprint: </label>
+                <div class="col-lg-6">
+                  <% if current_user_total? %>
+                    <%= f.select(:sprint_id,
+                            Sprint.all.collect {|s| [ truncate(s.description, length: 50), s.id ] },
+                            {},
+                            {class: "form-control"}) %>
+                  <% else %>
+                    <%= f.select(:sprint_id,
+                            Sprint.all.collect {|s| [ truncate(s.description, length: 50), s.id ] },
+                            {selected: @sprint.id},
+                            {class: "form-control"}) %>
+                  <% end %>
+                </div>
+              </div>
 
           </fieldset>
         </div>

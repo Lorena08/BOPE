@@ -21,6 +21,9 @@ class SprintsController < ApplicationController
       #            .page(params[:page]).per(10)
 
       @projects = Project.where(team_id: team_ids).page(params[:page]).per(5)
+
+      return @sprints = Sprint.where(project_id: project_ids)
+                            .order(:description).page(params[:page]).per(10)
     end
   end
 
@@ -31,10 +34,8 @@ class SprintsController < ApplicationController
 
   #show atualizado
   def show
-    unless current_user_total?
       @sprint = Sprint.find(params[:id]) #pega a variavel Sprint e o id especifico para mostrar os dados dela
       @project = Project.find(params[:project])
-    end
   end
 
   def new
@@ -83,5 +84,6 @@ class SprintsController < ApplicationController
     params.require(:sprint).permit(:id, :description, :inicio, :fim,
                                   :pontos_cadastrados, :pontos_atualizados)
   end
+
 
 end

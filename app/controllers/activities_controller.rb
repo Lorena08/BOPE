@@ -13,32 +13,33 @@ class ActivitiesController < ApplicationController
     if current_user_total?
       @activities = Activity.all.order(created_at: :desc).page(params[:page]).per(10)
     else
-      team_ids = []
-      TeamUser.where(user_id: current_user.id).each do |tu|
-        team_ids << tu.team_id
+      team_ids = [] # array de ids dos times
+      TeamUser.where(user_id: current_user.id).each do |tu| # pega cada relação de usuario c equipe onde o usuario tem o id do usuario atual
+        team_ids << tu.team_id # pega cada relacao acima e coloca no array
       end
 
-      # @sprints = Sprint.joins(:projects).where(projects: {team_id: team_ids})
-      #            .page(params[:page]).per(10)
+      # tem que relacionar o projeto com a atividade e nao Sprint com atividade 
+      project_ids = Project.where(team_id: team_ids).ids # pega os ids dos projetos onde tem os ids dos times colocados noarray
 
-      @projects = Project.where(team_id: team_ids).page(params[:page]).per(5)
+      return @activities = Activity.where(project_id: project_ids)
+                           .order(:description).page(params[:page]).per(10) # retorna as atividades onde tem os projetos listados acima e coloca em ordem
     end
   end
 
   def show
     unless current_user_total?
-      if params[:sprint].present? && params[:project].present?
-        @project = Project.find(params[:project])
-        @sprint =  Sprint.find(params[:sprint])
+      if params[:sprint].present? && params[:project].present? # se a sprint e o projeto sao os correspondentes
+        @project = Project.find(params[:project]) # entao a variavel @project recebe o presente projeto
+        @sprint =  Sprint.find(params[:sprint]) # entao a variavel @sprint recebe a presente sprint
       end
     end
   end
 
   def new
-    @activity = Activity.new
+    @activity = Activity.new # a variavel @activity recebe uma nova atividade
     unless current_user_total?
-      @project = Project.find(params[:project]).id
-      @sprint =  Sprint.find(params[:sprint]).id
+      @project = Project.find(params[:project]).id # a variavel @project recebe o projeto
+      @sprint =  Sprint.find(params[:sprint]).id # a variavel @sprint recebe a sprint
     end
   end
 

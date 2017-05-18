@@ -36,7 +36,15 @@
                   <td><%= truncate(sprint.description, length: 20) %></td> <%# trunca o tamanho para 10 %>
                   <td><%= l(sprint.inicio) %></td> <%#l=locale (traducao) -> traduz datas, palavras %>
                   <td><%= l(sprint.fim) %></td>
-                  <td><%= sprint.pontos_cadastrados %></td>
+
+                  <% pontos_cadastrados = 0 %>
+                  <% sprint.activities.each do |activity| %>
+                    <% if activity.project.id == project.id %>
+                      <% pontos_cadastrados += activity.pontos_cadastrados %>
+                    <% end %>
+                  <% end %>
+
+                  <td><%= pontos_cadastrados %></td>
 
                   <td align="center">
                     <%= link_to "Visualizar", sprint_path(sprint, project: project) %>

@@ -24,11 +24,14 @@
 
       <%# adicionado %>
       <% pontos_cadastrados = 0 %>
+
       <% @sprint.activities.each do |activity| %>
-        <% pontos_cadastrados += activity.pontos_cadastrados %>
+        <% if activity.project.id == @project.id %>
+          <% pontos_cadastrados += activity.pontos_cadastrados %>
+        <% end %>
       <% end %>
 
-      <span class="title">Pontos cadastrados:</span> <%=  @sprint.pontos_cadastrados %><br>
+      <span class="title">Pontos cadastrados:</span> <%=  pontos_cadastrados %><br>
 
       <span class="title">Pontos atualizados:</span> <%=  @sprint.pontos_atualizados %><br>
 
@@ -63,20 +66,25 @@
               <td>
                 <%= activity.label.blank? ? '-' : activity.label.description %>
               </td>
-              <td width="100" align="center">
-                <%= link_to "Visualizar", activity_path(activity, project: @project, sprint: @sprint) %>
+              <td>
+                <%= activity.project.description %>
               </td>
 
-              <% if can? :update, Sprint %>
-                <td width="100" align="center">
-                  <%= link_to t('buttons.edit'), edit_activity_path(activity) %>
+              <td width="70" align="center">
+                  <%= link_to "Visualizar", activity_path(activity, project: @project, sprint: @sprint) %>
                 </td>
-              <% end %>
 
-              <% if can? :destroy, Sprint %>
-                <td width="100" align="center">
-                  <%= link_to t('buttons.destroy'), activity, method: :delete, data: { confirm: t('messages.confirm') } %>
-                </td>
+                <% if can? :update, Activity %>
+                  <td width="70" align="center">
+                    <%= link_to t('buttons.edit'), edit_activity_path(activity) %>
+                  </td>
+                <% end %>
+
+                <% if can? :destroy, Activity %>
+                  <td width="70" align="center">
+                    <%= link_to t('buttons.destroy'), activity_path, method: :delete, data: { confirm: t('messages.confirm') } %>
+                  </td>
+                <% end %>
               <% end %>
 
             </tr>
@@ -96,11 +104,7 @@
       <% end %>
 
       <%# editado %>
-      <% if current_user_total? %>
-        <%= link_to t('buttons.back'), sprints_path, class: "btn btn-success" %>
-      <% else %>
-        <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-success" %>
-      <% end %>
+      <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-success" %>
 
     </div>
 

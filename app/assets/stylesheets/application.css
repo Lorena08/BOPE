@@ -17,12 +17,55 @@
  *= require_self
  */
 
+@import 'bootstrap/glyphicons';
 
 .title {
     font-size:14pt;
     color:white;
 }
 
+/* Dropdown no asidebar */
+.asidebar-content {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 600ms, visibility 600ms;
+}
+.asidebar-content-active {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+}
+.asidebar-content li:hover, .asidebar-content-active li:hover {
+    background-color: #3e3b3b;
+    border-radius: 5px;
+}
+.asidebar-content a, .asidebar-content-active a {
+    text-decoration: none !important;
+    padding: 2% 95% 2% 0;
+}
+.asidebar-content li, .asidebar-content-active li {
+    padding: 10px 20px;
+}
+.asidebar-dropdown {
+    overflow: hidden;
+}
+.asidebar-dropdown:hover .asidebar-content {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+}
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus,
+.asidebar-content-active .active {
+    color: #ffffff;
+    background-color: #2a9fd6 !important;
+    border-radius: 5px;
+}
+.nav-pills > li > a:hover {
+    background-color: #3e3b3b !important;
+}
 
 .outer {
     display: flex;

@@ -23,43 +23,46 @@
           </thead>
 
           <tbody>
-            <% @projects.each do |project| %>
-              <% project.sprints.each do |sprint| %>
-                <% sprint.activities.each do |activity| %>
-                  <tr>
-                    <td>
-                      <%= truncate(activity.description, length: 25) %>
-                    </td>
-                    <td>
-                      <%= activity.pontos_cadastrados %>
-                    </td>
-                    <td>
-                      <%= activity.status.blank? ? '-' : activity.status.description %>
-                    </td>
-                    <td>
-                      <%= activity.label.blank? ? '-' : activity.label.description %>
-                    </td>
-                    <td>
-                      <%= truncate(sprint.description, length: 20) %>
-                    </td>
+            <% @activities.each do |activity| %>
 
-                    <td>
-                      <%= truncate(project.description, length: 20) %>
-                    </td>
+              <tr>
+                <td>
+                  <%= truncate(activity.description, length: 25) %>
+                </td>
 
-                    <td>
-                      <%= link_to "Visualizar", activity_path(activity, project: project, sprint: sprint) %>
-                    </td>
-                    <td>
-                      <%= link_to t('buttons.edit'), edit_activity_path(activity) %>
-                    </td>
-                    <td>
-                      <%= link_to t('buttons.destroy'), activity, method: :delete, data: { confirm: t('messages.confirm') } %>
-                    </td>
+                <td>
+                  <%= activity.pontos_cadastrados %>
+                </td>
 
-                  </tr>
-                <% end %>
-              <% end %>
+                <td>
+                  <%= activity.status.blank? ? '-' : activity.status.description %>
+                </td>
+
+                <td>
+                  <%= activity.label.blank? ? '-' : activity.label.description %>
+                </td>
+
+                <td>
+                  <%= truncate(sprint.description, length: 20) %>
+                </td>
+
+                <td>
+                  <%= truncate(activity.project.description, length: 20) %>
+                </td>
+
+                <td>
+                  <%= link_to "Visualizar", activity_path(activity, project: activity.project, sprint: activity.sprint) %>
+                </td>
+
+                <td>
+                  <%= link_to t('buttons.edit'), edit_activity_path(activity) %>
+                </td>
+
+                <td>
+                  <%= link_to t('buttons.destroy'), activity_path(activity), method: :delete, data: { confirm: t('messages.confirm') } %>
+                </td>
+
+              </tr>
             <% end %>
           </tbody>
 

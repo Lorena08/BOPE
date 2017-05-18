@@ -24,7 +24,7 @@
 
         <%# adicionado %>
         <hr style="border-top-color: dimgray;">
-        <span class="title">Projetos:</span> <br><br>
+        <span class="title">Projeto:</span> <br><br>
 
         <table class="table table-striped table-hover ">
 
@@ -43,45 +43,43 @@
           </thead>
 
           <tbody>
-            <% @team.projects.each do |project| %>
-              <tr>
+            <tr>
 
-                <td>
-                  <%= project.description %>
-                </td>
+              <td>
+                <%= @team.project.description %>
+              </td>
 
-                <td>
-                  <%= project.sprints.count %>
-                </td>
+              <td>
+                <%= @team.project.sprints.count %>
+              </td>
 
-                <td>
-                  <% activities_count = 0 %>
-                  <% project.sprints.each do |sprint| %>
-                    <% activities_count += sprint.activities.count %>
-                  <% end %>
-
-                  <%= activities_count %>
-                </td>
-
-                <%# editado %>
-                <td align="center">
-                  <%= link_to "Visualizar", project_path(project) %>
-                </td>
-
-                <% if can? :update, Team %>
-                  <td>
-                    <%= link_to t('buttons.edit'), edit_project_path(project) %>
-                  </td>
+              <td>
+                <% activities_count = 0 %>
+                <% @team.project.sprints.each do |sprint| %>
+                  <% activities_count += sprint.activities.count %>
                 <% end %>
 
-                <% if can? :destroy, Sprint %>
-                  <td>
-                    <%= link_to t('buttons.destroy'), project_path(project), method: :delete, data: { confirm: t('messages.confirm') } %>
-                  </td>
-                <% end %>
+                <%= activities_count %>
+              </td>
 
-              </tr>
-            <% end %>
+              <%# editado %>
+              <td align="center">
+                <%= link_to "Visualizar", project_path(@team.project) %>
+              </td>
+
+              <% if can? :update, Project %>
+                <td>
+                  <%= link_to t('buttons.edit'), edit_project_path(@team.project) %>
+                </td>
+              <% end %>
+
+              <% if can? :destroy, Project %>
+                <td>
+                  <%= link_to t('buttons.destroy'), project_path(@team.project), method: :delete, data: { confirm: t('messages.confirm') } %>
+                </td>
+              <% end %>
+
+            </tr>
           </tbody>
 
         </table>

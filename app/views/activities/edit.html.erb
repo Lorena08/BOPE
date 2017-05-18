@@ -26,6 +26,12 @@
         <% end %>
 
         <div class="panel-body">
+
+          <% unless current_user_total? %>
+            <%= hidden_field_tag("project", @project) %>
+            <%= hidden_field_tag("sprint", @sprint) %>
+          <% end %>
+
           <fieldset>
 
             <div class="form-group">
@@ -63,6 +69,16 @@
             </div>
 
             <div class="form-group">
+              <label class="col-lg-2 control-label">Projeto: </label>
+              <div class="col-lg-6">
+                <%= f.select(:sprint_id,
+                        Project.all.collect {|p| [ truncate(p.description, length: 50), p.id ] },
+                        {selected: @activity.project_id},
+                        {class: "form-control"}) %>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label class="col-lg-2 control-label">Sprint: </label>
               <div class="col-lg-6">
                 <%= f.select(:sprint_id,
@@ -75,7 +91,7 @@
           </fieldset>
         </div>
 
-        <br>
+      <br>
 
       <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
       <%= link_to t('buttons.back'), activities_path, class: "btn btn-success" %>

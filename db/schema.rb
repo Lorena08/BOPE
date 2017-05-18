@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516013141) do
+ActiveRecord::Schema.define(version: 20170518031405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,9 @@ ActiveRecord::Schema.define(version: 20170516013141) do
     t.integer  "sprint_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "project_id"
     t.index ["label_id"], name: "index_activities_on_label_id", using: :btree
+    t.index ["project_id"], name: "index_activities_on_project_id", using: :btree
     t.index ["sprint_id"], name: "index_activities_on_sprint_id", using: :btree
     t.index ["status_id"], name: "index_activities_on_status_id", using: :btree
   end
@@ -124,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170516013141) do
   end
 
   add_foreign_key "activities", "labels"
+  add_foreign_key "activities", "projects"
   add_foreign_key "activities", "sprints"
   add_foreign_key "activities", "statuses"
   add_foreign_key "labels", "colors"

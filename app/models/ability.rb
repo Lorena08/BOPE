@@ -10,8 +10,8 @@ class Ability
        else
          #can :read, :all
          #can :update, User
-         can :read, UserProfile, id: user.id
-         can :update, UserProfile, self_managed: true
+         can [:read, :update], UserProfile, id: user.id
+         can :read, Team
          can :read, Project
          can :read, Sprint
          can :manage, Activity

@@ -180,14 +180,17 @@ namespace :dev do
 
     puts "Gerando as ATIVIDADES..."
 
-    Sprint.all.each do |sprint|
-      Activity.create!(
-        description: LeroleroGenerator.sentence,
-        pontos_cadastrados: Random.rand(0..25),
-        status_id: Status.all.sample.id,
-        label_id: Label.all.sample.id,
-        sprint_id: sprint.id
+    Project.all.each do |project|
+      project.sprints.each do |sprint|
+        Activity.create!(
+          description: LeroleroGenerator.sentence,
+          pontos_cadastrados: Random.rand(0..25),
+          status_id: Status.all.sample.id,
+          label_id: Label.all.sample.id,
+          project_id: project.id,
+          sprint_id: sprint.id
         )
+      end
     end
 
     puts "Gerando as ATIVIDADES... [OK]"

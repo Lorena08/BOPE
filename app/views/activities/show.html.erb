@@ -18,9 +18,11 @@
 
       <span class="title">Descrição:</span> <%= @activity.description %> <br>
       <span class="title">Pontos cadastrados:</span> <%= @activity.pontos_cadastrados %> <br>
-      <span class="title">Status:</span> <%= @activity.status.description %> <br>
+      <span class="title">Status:</span> <%= @activity.status.blank? ? '-' : @activity.status.description %> <br>
       <span class="title">Rótulo:</span> <%= @activity.label.blank? ? '-' : @activity.label.description %> <br>
+      <span class="title">Projeto: </span> <%= @activity.project.description %> <br>
       <span class="title">Sprint:</span> <%= @activity.sprint.blank? ? '-' : @activity.sprint.description %>
+
 
       <br><br><br>
 
@@ -29,11 +31,8 @@
       <% end %>
 
       <%# editado %>
-      <% if current_user_total? %>
-        <%= link_to t('buttons.back'), activities_path, class: "btn btn-success" %>
-      <% else %>
-        <%= link_to t('buttons.back'), sprint_path(@sprint, project: @project), class: "btn btn-success" %>
-      <% end %>
+      <%= link_to t('buttons.back'), activities_path, class: "btn btn-success" %>
+
 
     </div>
 

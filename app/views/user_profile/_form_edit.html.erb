@@ -50,6 +50,8 @@
             </div>
           </div>
 
+          <br><br>
+
           <%= f.fields_for :user_profile do |user_profile| %>
 
             <div class="form-group">
@@ -63,13 +65,6 @@
               <label class="col-lg-3 control-label">Nome: </label>
               <div class="col-lg-7">
                 <%= user_profile.text_field :name, class: 'form-control' %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-lg-3 control-label">Acesso: </label>
-              <div class="col-lg-3">
-                <%= user_profile.select(:role, ['Total', 'Parcial'], {}, { class: 'form-control'}) %>
               </div>
             </div>
 

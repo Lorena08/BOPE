@@ -63,6 +63,18 @@
                 <%= link_to "Visualizar", sprint_path(sprint, project: @project) %>
               </td>
 
+              <% if can? :update, Sprint %>
+              <td width="100" align="center">
+                <%= link_to t('buttons.edit'), edit_sprint_path(sprint) %>
+              </td>
+            <% end %>
+
+            <% if can? :destroy, Sprint %>
+              <td width="100" align="center">
+                <%= link_to t('buttons.destroy'), sprint_path, method: :delete, data: { confirm: t('messages.confirm') } %>
+              </td>
+            <% end %>
+
             </tr>
           <% end %>
         </tbody>
@@ -70,10 +82,6 @@
       </table>
 
       <br><br>
-
-      <%# <% if can? :update, Project %>
-      <%#   <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-primary" %> |
-      <%# <% end %>
 
 
       <%= link_to t('buttons.back'), projects_path, class: "btn btn-success" %>

@@ -8,9 +8,8 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource #pega o layout especifico
 
 
-  #load_and_authorize_resource unless :home_controller?
-
-  #adicionado
+  # gerencia o aside_bar de forma que fique azul qnd o item é acessado,
+  # faz aparecer os subitens e olha se o usuario eh o adm
   include ApplicationHelper
 
 
@@ -24,13 +23,5 @@ class ApplicationController < ActionController::Base
         "application" #restante das paginas
       end
     end
-
-    #def home_controller?
-    #  if params[:controller] == 'home'
-    #    true
-    #  else
-    #    false
-    #  end
-    #end
 
 end
