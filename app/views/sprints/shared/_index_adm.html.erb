@@ -23,8 +23,8 @@
         <tbody>
           <% @sprints.each do |sprint| %>
             <tr>
-              <td><%= truncate(sprint.description, length: 20) %></td> <%# trunca o tamanho para 10 %>
-              <td><%= l(sprint.inicio) %></td> <%# l=locale (traducao) -> traduz datas, palavras %>
+              <td><%= truncate(sprint.description, length: 20) %></td> <!-- trunca o tamanho para 10 -->
+              <td><%= l(sprint.inicio) %></td> <!-- l=locale (traducao) -> traduz datas, palavras -->
               <td><%= l(sprint.fim) %></td>
 
               <% pontos_cadastrados = 0 %>

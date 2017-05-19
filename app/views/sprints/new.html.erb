@@ -1,9 +1,9 @@
-<div class="col-sm-9">
+<div class="col-lg-9">
   <div class="panel">
 
     <div class="panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title"><center>Editar Sprint</center></h3>
+        <h3 class="panel-title"><center>Criar Sprint</center></h3>
       </div>
     </div>
 
@@ -11,6 +11,8 @@
     <div class="panel-body">
 
       <%= form_for(@sprint, html: {class: 'form-horizontal'}) do |f| %>
+
+        <%= hidden_field_tag("project_id", @project.id) %>
 
         <% if @sprint.errors.any? %>
           <div id="error_explanation">
@@ -29,30 +31,23 @@
         <fieldset>
 
           <div class="form-group">
-            <label class="col-lg-3 control-label">Descrição: </label>
+            <label class="col-lg-2 control-label">Descrição: </label>
             <div class="col-lg-8">
-              <%= f.text_field :description, class: 'form-control' %>
+              <%= f.text_area :description, rows: 5, class: 'form-control' %>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-lg-3 control-label">Início: </label>
+            <label class="col-lg-2 control-label">Início: </label>
             <div class="col-lg-3">
               <%= f.text_field :inicio, value: l(Date.today), class: 'form-control datepicker' %>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-lg-3 control-label">Fim: </label>
+            <label class="col-lg-2 control-label">Fim: </label>
             <div class="col-lg-3">
               <%= f.text_field :fim, value: l(Date.today + 1), class: 'form-control datepicker' %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Pontos cadastrados: </label>
-            <div class="col-lg-3">
-              <%= f.number_field :pontos_cadastrados, min: 0, class: 'form-control' %>
             </div>
           </div>
 

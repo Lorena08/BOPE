@@ -10,11 +10,9 @@
     <div class="panel-body">
 
       <%# adicionado %>
-      <% unless current_user_total? %>
-        <ul class="breadcrumb" style="background-color: #3e3b3b;">
-          <li><%= link_to "Projetos", projects_path %></li>
-        </ul>
-      <% end %>
+      <ul class="breadcrumb" style="background-color: #3e3b3b;">
+        <li><%= link_to "Projetos", projects_path %></li>
+      </ul>
 
       <span class="title">Descrição:</span> <%= @project.description %> <br>
       <span class="title">Equipe:</span> <%= @project.team.description %> <br>
@@ -31,7 +29,7 @@
 
             <th>Descrição</th>
             <th>Qtd. atividades</th>
-            <th>Pontos cadastrados</th>
+            <th>Pontos desejados</th>
             <th width="150"></th>
 
           </tr>
@@ -81,8 +79,15 @@
 
       </table>
 
-      <br><br>
+      <%= link_to t('buttons.new'), new_sprint_path(project: @project), class: "btn btn-primary" %>
 
+      <br><br><br><br>
+
+      <% if can? :update, Project %>
+        <td width="100" align="center">
+          <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-primary" %> |
+        </td>
+      <% end %>
 
       <%= link_to t('buttons.back'), projects_path, class: "btn btn-success" %>
 

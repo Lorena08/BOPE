@@ -11,14 +11,14 @@ class ActivitiesController < ApplicationController
 
   def index
     if current_user_total?
-      @activities = Activity.all.order(created_at: :desc).page(params[:page]).per(10)
+      @activities = Activity.all.order(:description).page(params[:page]).per(10)
     else
       team_ids = [] # array de ids dos times
       TeamUser.where(user_id: current_user.id).each do |tu| # pega cada relação de usuario c equipe onde o usuario tem o id do usuario atual
         team_ids << tu.team_id # pega cada relacao acima e coloca no array
       end
 
-      # tem que relacionar o projeto com a atividade e nao Sprint com atividade 
+      # tem que relacionar o projeto com a atividade e nao Sprint com atividade
       project_ids = Project.where(team_id: team_ids).ids # pega os ids dos projetos onde tem os ids dos times colocados noarray
 
       return @activities = Activity.where(project_id: project_ids)
@@ -27,20 +27,13 @@ class ActivitiesController < ApplicationController
   end
 
   def show
-    unless current_user_total?
-      if params[:sprint].present? && params[:project].present? # se a sprint e o projeto sao os correspondentes
-        @project = Project.find(params[:project]) # entao a variavel @project recebe o presente projeto
-        @sprint =  Sprint.find(params[:sprint]) # entao a variavel @sprint recebe a presente sprint
-      end
-    end
+
   end
 
   def new
     @activity = Activity.new # a variavel @activity recebe uma nova atividade
-    unless current_user_total?
-      @project = Project.find(params[:project]).id # a variavel @project recebe o projeto
-      @sprint =  Sprint.find(params[:sprint]).id # a variavel @sprint recebe a sprint
-    end
+    @project = Project.find(params[:project]) # a variavel @project recebe o projeto
+    @sprint =  Sprint.find(params[:sprint]) # a variavel @sprint recebe a sprint
   end
 
   def create
@@ -77,7 +70,8 @@ class ActivitiesController < ApplicationController
 
   def activity_params
     params.require(:activity).permit(:id, :description, :pontos_cadastrados,
-                                     :status_id, :label_id, :sprint_id)
+                                     :status_id, :label_id, :project_id,
+                                     :sprint_id)
   end
 
 

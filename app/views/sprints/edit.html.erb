@@ -1,4 +1,4 @@
-<div class="col-sm-9">
+<div class="col-lg-9">
   <div class="panel">
 
     <div class="panel-primary">
@@ -28,7 +28,7 @@
         <fieldset>
 
           <div class="form-group">
-            <label class="col-lg-3 control-label">Descrição: </label>
+            <label class="col-lg-2 control-label">Descrição: </label>
             <div class="col-lg-8">
               <%= f.text_field :description, class: 'form-control' %>
             </div>
@@ -36,12 +36,12 @@
 
           <div class="form-group">
 
-            <label class="col-lg-3 control-label">Início: </label>
+            <label class="col-lg-2 control-label">Início: </label>
             <div class="col-lg-2">
               <%= f.text_field :inicio, value: l(@sprint.inicio), class: 'form-control datepicker' %>
             </div>
 
-            <label class="col-lg-3 control-label">Fim: </label>
+            <label class="col-lg-2 control-label">Fim: </label>
             <div class="col-lg-2">
               <%= f.text_field :fim, value: l(@sprint.fim), class: 'form-control datepicker' %>
             </div>
@@ -50,12 +50,7 @@
 
           <div class="form-group">
 
-            <label class="col-lg-3 control-label">Pontos cadastrados: </label>
-            <div class="col-lg-2">
-              <%= f.number_field :pontos_cadastrados, min: 0, class: 'form-control' %>
-            </div>
-
-            <label class="col-lg-3 control-label">Pontos atualizados: </label>
+            <label class="col-lg-2 control-label">Pontos atualizados: </label>
             <div class="col-lg-2">
               <%= f.number_field :pontos_atualizados, min: 0, class: 'form-control' %>
             </div>

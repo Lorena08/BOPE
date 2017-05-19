@@ -17,12 +17,12 @@ ActiveRecord::Schema.define(version: 20170518031405) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "description"
-    t.integer  "pontos_planejados"
+    t.integer  "pontos_cadastrados"
     t.integer  "status_id"
     t.integer  "label_id"
     t.integer  "sprint_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "project_id"
     t.index ["label_id"], name: "index_activities_on_label_id", using: :btree
     t.index ["project_id"], name: "index_activities_on_project_id", using: :btree

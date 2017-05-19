@@ -2,7 +2,7 @@ class CreateActivities < ActiveRecord::Migration[5.0]
   def change
     create_table :activities do |t|
       t.string :description
-      t.integer :pontos_planejados
+      t.integer :pontos_cadastrados
       t.references :status, foreign_key: true
       t.references :label, foreign_key: true
       t.references :sprint, foreign_key: true

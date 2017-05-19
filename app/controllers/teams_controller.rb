@@ -74,7 +74,7 @@ class TeamsController < ApplicationController
 
     if @team.destroy
      redirect_to teams_path, notice: "Equipe [#{@team_deleted}] deletada com sucesso!"
-   else
+    else
      redirect_to teams_path, notice: "Erro ao deletar a equipe [#{@team_deleted}]..."
     end
   end

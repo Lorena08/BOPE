@@ -13,11 +13,11 @@
           <thead>
             <tr>
               <th>Descrição</th>
-              <th>Pontos cadastrados</th>
+              <th>Pontos desejados</th>
               <th>Status</th>
               <th>Rótulo</th>
               <th>Sprint</th>
-              <th>Projeto</th>
+              <th>Projeto</th> %>
               <th colspan="3"></th>
             </tr>
           </thead>
@@ -43,12 +43,12 @@
                 </td>
 
                 <td>
-                  <%= truncate(sprint.description, length: 20) %>
+                  <%= truncate(activity.sprint.description, length: 20) %>
                 </td>
 
                 <td>
                   <%= truncate(activity.project.description, length: 20) %>
-                </td>
+                </td> %>
 
                 <td>
                   <%= link_to "Visualizar", activity_path(activity, project: activity.project, sprint: activity.sprint) %>
@@ -70,9 +70,8 @@
 
         <center><%= paginate @activities %></center>
 
-        <% if can? :create, Activity %>
-          <%= link_to t('buttons.new'), new_activity_path, class: "btn btn-primary" %>
-        <% end %>
+        <%= link_to t('buttons.new'), new_activity_path, class: "btn btn-primary" %>
+
 
     </div>
   </div>
