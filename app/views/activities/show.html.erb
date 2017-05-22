@@ -10,13 +10,11 @@
     <div class="panel-body">
 
     <%# adicionado %>
-      <% unless current_user_total? %>
-        <ul class="breadcrumb" style="background-color: #3e3b3b;">
-          <li><%= link_to "Projeto", project_path(@project) %></li>
-          <li><%= link_to "Sprint", sprint_path(@sprint, project: @project) %></li>
-          <li class="active">Atividade</li>
-        </ul>
-      <% end %>
+      <ul class="breadcrumb" style="background-color: #3e3b3b;">
+        <li><%= link_to "Projeto", project_path(@activity.project) %></li>
+        <li><%= link_to "Sprint", sprint_path(@activity.sprint, project: @activity.project) %></li>
+        <li class="active">Atividade</li>
+      </ul>
 
       <span class="title">Descrição:</span> <%= @activity.description %> <br>
       <span class="title">Pontos desejados:</span> <%= @activity.pontos_cadastrados %> <br>
@@ -28,9 +26,7 @@
 
       <br><br><br>
 
-      <% if can? :update, Activity %>
-        <%= link_to t('buttons.edit'), edit_activity_path(@activity), class: "btn btn-primary" %> |
-      <% end %>
+      <%= link_to t('buttons.edit'), edit_activity_path(@activity), class: "btn btn-primary" %> |
 
       <%# editado %>
       <%= link_to t('buttons.back'), sprint_path(@activity.sprint.id, project: @activity.project.id), class: "btn btn-success" %>

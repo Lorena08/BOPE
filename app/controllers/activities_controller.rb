@@ -57,8 +57,12 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
+    @sprint = @activity.sprint
+    @project = @activity.project
     if @activity.destroy
-      redirect_to activities_path, notice: "Atividade excluída com sucesso!"
+      redirect_to sprint_path(@sprint, project: @project), notice: "Atividade excluída com sucesso!"
+    else
+      redirect_to sprint_path(@sprint, project: @project), notice: "Erro ao excluir atividade..."
     end
   end
 

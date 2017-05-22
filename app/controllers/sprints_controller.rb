@@ -36,6 +36,7 @@ class SprintsController < ApplicationController
 
   def edit
     @sprint = Sprint.find(params[:id]) #pega a variavel Sprint e o id especifico para editar os dados dela
+    @project = Project.find(params[:project])
   end
 
 
@@ -49,9 +50,9 @@ class SprintsController < ApplicationController
       @project_sprint.sprint_id = @sprint.id
 
       if @project_sprint.save
-        redirect_to sprint_path(@sprint), notice: "[#{@sprint_created}] criada com sucesso!"
+        redirect_to sprint_path(@sprint, project: params[:projec.id]), notice: "[#{@sprint_created}] criada com sucesso!"
       end
-      
+
     else
       render :new
     end
@@ -60,7 +61,7 @@ class SprintsController < ApplicationController
   def update
     @sprint = Sprint.find(params[:id])
     if @sprint.update(sprint_params)
-      redirect_to sprint_path(@sprint), notice: "[#{@sprint.description}] atualizada com sucesso!"
+      redirect_to sprint_path(@sprint, project: params[:project]), notice: "[#{@sprint.description}] atualizada com sucesso!"
     else
       render :edit
     end
@@ -71,9 +72,9 @@ class SprintsController < ApplicationController
     @sprint_deleted = @sprint.description
 
     if @sprint.destroy
-      redirect_to sprints_path, notice: "[#{@sprint_deleted}] deletada com sucesso!"
+      redirect_to project_path(params[:project]), notice: "[#{@sprint_created}] deletada com sucesso!"
     else
-      redirect_to sprints_path, notice: "Erro ao deletar o Sprint [#{@sprint_deleted}]..."
+      redirect_to project_path(params[:project]), notice: "Erro ao deletar o Sprint [#{@sprint_deleted}]..."
     end
   end
 

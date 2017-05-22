@@ -20,7 +20,7 @@ class LabelsController < ApplicationController
   def create
     @label = Label.new(label_params)
     if @label.save
-      redirect_to label_path(@label), notice: "Rótulo criado com sucesso!"
+      redirect_to labels_path, notice: "Rótulo criado com sucesso!"
     else
       render :new
     end
@@ -31,7 +31,7 @@ class LabelsController < ApplicationController
 
   def update
     if @label.update(label_params)
-      redirect_to label_path(@label), notice: "Rótulo atualizado com sucesso!"
+      redirect_to labels_path, notice: "Rótulo atualizado com sucesso!"
     else
       render :new
     end

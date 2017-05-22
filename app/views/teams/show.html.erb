@@ -35,9 +35,7 @@
               <th>Qtd. sprints</th>
               <th>Qtd. atividades</th>
 
-              <% unless current_user_total? %>
-                <th width="150"></th>
-              <% end %>
+  
 
             </tr>
           </thead>
@@ -63,22 +61,6 @@
                   <%= activities_count %>
                 </td>
 
-                <%# editado %>
-                <%# <td align="center">
-                <%#   <%= link_to "Visualizar", project_path(@team.project) %>
-                <%# </td> %>
-
-                <% if can? :update, Project %>
-                  <td>
-                    <%= link_to t('buttons.edit'), edit_project_path(@team.project) %>
-                  </td>
-                <% end %>
-
-                <% if can? :destroy, Project %>
-                  <td>
-                    <%= link_to t('buttons.destroy'), project_path(@team.project), method: :delete, data: { confirm: t('messages.confirm') } %>
-                  </td>
-                <% end %>
 
               </tr>
             <% end %>

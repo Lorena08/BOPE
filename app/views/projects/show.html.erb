@@ -27,9 +27,9 @@
         <thead>
           <tr>
 
-            <th>Descrição</th>
-            <th>Qtd. atividades</th>
-            <th>Pontos desejados</th>
+            <th><center>Descrição</center></th>
+            <th><center>Qtd. atividades</center></th>
+            <th><center>Pontos desejados</center></th>
             <th width="150"></th>
 
           </tr>
@@ -40,18 +40,26 @@
           <% @project.sprints.each do |sprint| %>
             <tr>
 
-              <td>
+              <td align="center">
                 <%= sprint.description %>
               </td>
 
-              <td>
-                <%= sprint.activities.count %>
+              <td align="center">
+                <% activities = 0 %>
+                <% sprint.activities.each do |activity| %>
+                  <% if activity.project.id == @project.id %>
+                    <% activities += 1 %>
+                  <% end %>
+                <% end %>
+                <%= activities %>
               </td>
 
               <td align="center">
                 <% pontos_cadastrados = 0 %>
                 <% sprint.activities.each do |activity| %>
-                  <% pontos_cadastrados += activity.pontos_cadastrados %>
+                  <% if activity.project.id == @project.id %>
+                    <% pontos_cadastrados += activity.pontos_cadastrados %>
+                  <% end %>
                 <% end %>
 
                 <%= pontos_cadastrados %>
@@ -62,14 +70,14 @@
               </td>
 
               <% if can? :update, Sprint %>
-              <td width="100" align="center">
-                <%= link_to t('buttons.edit'), edit_sprint_path(sprint) %>
-              </td>
+                <td width="100" align="center">
+                  <%= link_to t('buttons.edit'), edit_sprint_path(sprint, project: @project) %>
+                </td>
             <% end %>
 
             <% if can? :destroy, Sprint %>
               <td width="100" align="center">
-                <%= link_to t('buttons.destroy'), sprint_path, method: :delete, data: { confirm: t('messages.confirm') } %>
+                <%= link_to t('buttons.destroy'), sprint_path(sprint, project:@project), method: :delete, data: { confirm: t('messages.confirm') } %>
               </td>
             <% end %>
 
@@ -79,8 +87,9 @@
 
       </table>
 
-      <%= link_to t('buttons.new'), new_sprint_path(project: @project), class: "btn btn-primary" %>
-
+      <% if can? :create, Sprint %>
+        <%= link_to t('buttons.new'), new_sprint_path(project: @project), class: "btn btn-primary" %>
+      <% end %>
       <br><br><br><br>
 
       <% if can? :update, Project %>

@@ -27,11 +27,6 @@
 
         <div class="panel-body">
 
-          <%# <% unless current_user_total? %>
-          <%#  <%= hidden_field_tag("project", @project) %>
-          <%#  <%= hidden_field_tag("sprint", @sprint) %>
-          <%# <% end %>
-
           <fieldset>
 
             <div class="form-group">
@@ -73,9 +68,10 @@
               <label class="col-lg-2 control-label">Projeto: </label>
               <div class="col-lg-6">
 
-                <%= f.hidden_field(:project_id, value: @project) %>
-                <%= @project.description %>
-
+                <%= f.hidden_field(:project_id, value: @project.id) %>
+                <span style="display: block; margin-top: 9px;">
+                  <%= @project.description %>
+                </span>
               </div>
             </div>
 
@@ -83,8 +79,10 @@
               <label class="col-lg-2 control-label">Sprint: </label>
               <div class="col-lg-6">
 
-                <%= f.hidden_field(:sprint_id, value: @sprint) %>
-                <%= @sprint.description %>
+                <%= f.hidden_field(:sprint_id, value: @sprint.id) %>
+                <span style="display: block; margin-top: 9px;">
+                  <%= @sprint.description %>
+                </span>
 
               </div>
             </div>
@@ -92,15 +90,9 @@
           </fieldset>
         </div>
 
-      <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
+        <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
 
-      <% if current_user_total? %>
-        <%= link_to t('buttons.back'), activities_path, class: "btn btn-success" %>
-      <% else %>
         <%= link_to t('buttons.back'), sprint_path(@sprint, project: @project), class: "btn btn-success" %>
       <% end %>
-
     </div>
   </div>
-
-<% end %>

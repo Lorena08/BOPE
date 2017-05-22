@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :teams
   resources :user_profile
-  resources :sprints
   resources :projects
+  resources :sprints
   resources :activities
   resources :colors, except: [:show]
   resources :labels, except: [:show]

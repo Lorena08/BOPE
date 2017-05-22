@@ -27,11 +27,6 @@
 
         <div class="panel-body">
 
-          <% unless current_user_total? %>
-            <%= hidden_field_tag("project", @project) %>
-            <%= hidden_field_tag("sprint", @sprint) %>
-          <% end %>
-
           <fieldset>
 
             <div class="form-group">
@@ -71,20 +66,22 @@
             <div class="form-group">
               <label class="col-lg-2 control-label">Projeto: </label>
               <div class="col-lg-6">
-                <%= f.select(:sprint_id,
-                        Project.all.collect {|p| [ truncate(p.description, length: 50), p.id ] },
-                        {selected: @activity.project_id},
-                        {class: "form-control"}) %>
+
+                <%= f.hidden_field(:project_id, value: @activity.project.id) %>
+                  <span style="display: block; margin-top: 9px;">
+                    <%= @activity.project.description %>
+                  </span>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-lg-2 control-label">Sprint: </label>
               <div class="col-lg-6">
-                <%= f.select(:sprint_id,
-                        Sprint.all.collect {|s| [ truncate(s.description, length: 50), s.id ] },
-                        {selected: @activity.sprint_id},
-                        {class: "form-control"}) %>
+
+                <%= f.hidden_field(:sprint_id, value: @activity.sprint.id) %>
+                <span style="display: block; margin-top: 9px;">
+                  <%= @activity.sprint.description %>
+                </span>
               </div>
             </div>
 
@@ -94,7 +91,7 @@
       <br>
 
       <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
-      <%= link_to t('buttons.back'), activities_path, class: "btn btn-success" %>
+      <%= link_to t('buttons.back'), sprint_path(@activity.sprint, project: @activity.project), class: "btn btn-success" %>
 
     </div>
   </div>

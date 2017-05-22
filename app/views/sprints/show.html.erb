@@ -30,7 +30,7 @@
 
       <% end %>
 
-      <span class="title">Pontos cadastrados:</span> <%=  pontos_cadastrados %> <br>
+      <span class="title">Pontos desejados:</span> <%=  pontos_cadastrados %> <br>
 
       <span class="title">Pontos atualizados:</span> <%= @sprint.pontos_atualizados %>
 
@@ -42,7 +42,7 @@
         <thead>
           <tr>
             <th>Descrição</th>
-            <th>Pontos cadastrados</th>
+            <th>Pontos desejados</th>
             <th>Status</th>
             <th>Rótulo</th>
             <th>Projeto</th>
@@ -77,17 +77,14 @@
                     <%= link_to "Visualizar", activity_path(activity, project: @project, sprint: @sprint) %>
                   </td>
 
-                  <% if can? :update, Activity %>
-                    <td width="70" align="center">
-                      <%= link_to t('buttons.edit'), edit_activity_path(activity) %>
-                    </td>
-                  <% end %>
+                  <td width="70" align="center">
+                    <%= link_to t('buttons.edit'), edit_activity_path(activity) %>
+                  </td>
 
-                  <% if can? :destroy, Activity %>
-                    <td width="70" align="center">
-                      <%= link_to t('buttons.destroy'), activity_path, method: :delete, data: { confirm: t('messages.confirm') } %>
-                    </td>
-                  <% end %>
+                  <td width="70" align="center">
+                    <%= link_to t('buttons.destroy'), activity_path(activity), method: :delete, data: { confirm: t('messages.confirm') } %>
+                  </td>
+
                 <% end %>
 
               </tr>
@@ -104,7 +101,7 @@
       <br><br><br><br>
 
       <% if can? :update, Sprint %>
-        <%= link_to t('buttons.edit'), edit_sprint_path(@sprint), class: "btn btn-primary" %> |
+        <%= link_to t('buttons.edit'), edit_sprint_path(@sprint, project: @project), class: "btn btn-primary" %> |
       <% end %>
 
       <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-success" %>

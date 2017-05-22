@@ -1,4 +1,5 @@
 class StatusesController < ApplicationController
+
   before_action :set_status, only: [:show, :edit, :update, :destroy]
 
   # Erro da gem Cancan (ActiveModel::ForbiddenAttributesError)
