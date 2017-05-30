@@ -50,7 +50,7 @@ class SprintsController < ApplicationController
       @project_sprint.sprint_id = @sprint.id
 
       if @project_sprint.save
-        redirect_to sprint_path(@sprint, project: params[:projec.id]), notice: "[#{@sprint_created}] criada com sucesso!"
+        redirect_to sprint_path(@sprint, project: params[:project_id]), notice: "[#{@sprint_created}] criada com sucesso!"
       end
 
     else

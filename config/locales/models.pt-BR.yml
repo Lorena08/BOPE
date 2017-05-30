@@ -3,6 +3,12 @@ pt-BR:
     models:
       user: Usuário
       team: Equipe
+      activity: Atividade
+      color: Cor
+      label: Rótulo
+      project: Projeto
+      sprint: Sprint
+      status: Estado
     attributes:
       user:
         email: E-mail
@@ -15,4 +21,12 @@ pt-BR:
       team:
         description: Descrição
       sprint:
+        description: Descrição
+      color:
+        description: Descrição
+      label:
+        description: Descrição
+      status:
+        description: Descrição
+      project:
         description: Descrição
