@@ -46,6 +46,7 @@ GEM
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
     bindex (0.5.0)
+<<<<<<< HEAD
     bootstrap-datepicker-rails (1.6.4.1)
       railties (>= 3.0)
     bootstrap-glyphicons (0.0.1)
@@ -54,6 +55,12 @@ GEM
     builder (3.2.3)
     byebug (9.0.6)
     cancan (1.6.10)
+    choice (0.2.0)
+=======
+    builder (3.2.3)
+    byebug (9.0.6)
+    cancan (1.6.10)
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
     climate_control (0.1.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -87,6 +94,12 @@ GEM
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
       multi_json (~> 1.2)
+<<<<<<< HEAD
+    jquery-minicolors-rails (2.2.3.1)
+      jquery-rails
+      rails (>= 3.2.8)
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -163,6 +176,14 @@ GEM
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6)
+<<<<<<< HEAD
+    rails-erd (1.5.2)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     rails-i18n (5.0.3)
@@ -186,6 +207,10 @@ GEM
     rdoc (4.3.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
+<<<<<<< HEAD
+    ruby-graphviz (1.2.2)
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -229,15 +254,24 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+<<<<<<< HEAD
+    wicked_pdf (1.1.0)
     will_paginate (3.0.12)
+    wkhtmltopdf-binary (0.12.3.1)
+=======
+    will_paginate (3.0.12)
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   better_errors
+<<<<<<< HEAD
   bootstrap-datepicker-rails
   bootstrap-glyphicons
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
   byebug
   cancan
   cocoon
@@ -248,6 +282,10 @@ DEPENDENCIES
   faker
   foreman
   jbuilder (~> 2.5)
+<<<<<<< HEAD
+  jquery-minicolors-rails
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
   jquery-rails
   kaminari
   kaminari-i18n
@@ -260,6 +298,10 @@ DEPENDENCIES
   rails (~> 5.0.2)
   rails-assets-bootstrap!
   rails-assets-notifyjs!
+<<<<<<< HEAD
+  rails-erd
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
   rails-i18n (~> 5.0.0)
   rails_12factor
   sass-rails (~> 5.0)
@@ -270,7 +312,16 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
+<<<<<<< HEAD
+  wicked_pdf
+  will_paginate (~> 3.0.4)
+  wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.15.3
+=======
   will_paginate (~> 3.0.4)
 
 BUNDLED WITH
    1.14.6
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700

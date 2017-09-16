@@ -9,96 +9,49 @@
 
     <div class="panel-body">
 
-      <%# adicionado %>
-      <ul class="breadcrumb" style="background-color: #3e3b3b;">
-        <li><%= link_to "Projetos", projects_path %></li>
+      <ul class="breadcrumb">
+        <div class="row">
+
+          <div class="col-lg-5 col-sm-5 col-xs-5">
+            <li><%= link_to "Projetos", projects_path %></li>
+          </div>
+
+          <%= render partial: 'progresses/shared/progress_bar' %>
+
+          <%= render partial: 'progresses/shared/dropdown_progresses' %>
+
+        </div>
       </ul>
 
-      <span class="title">Descrição:</span> <%= @project.description %> <br>
-      <span class="title">Equipe:</span> <%= @project.team.description %> <br>
+      <div class="row">
+        <div class="col-lg-6 lg-sm-6">
+          <div class="pull-left">
+            <span class="title">Descrição:</span> <%= @project.description %> <br>
+            <span class="title">Equipe:</span> <%= @project.team.description %> <br>
+          </div>
+        </div>
 
-      <%# adicionado %>
-      <hr style="border-top-color: dimgray;">
-      <span class="title">Sprints:</span> <br><br>
 
-      <%# adicionado %>
-      <table class="table table-striped table-hover ">
+        <div class="col-lg-6 lg-sm-6">
+          <div class="pull-right">
+          </div>
+        </div>
+      </div>
 
-        <thead>
-          <tr>
+      <%= render partial: 'projects/shared/sprints_list' %> <br><br>
 
-            <th><center>Descrição</center></th>
-            <th><center>Qtd. atividades</center></th>
-            <th><center>Pontos planejados</center></th>
-            <th width="150"></th>
+      <%= render partial: 'projects/shared/macro_activities_list' %>
 
-          </tr>
-        </thead>
+      <br><br>
 
-        <%# aeditado %>
-        <tbody>
-          <% @project.sprints.each do |sprint| %>
-            <tr>
-
-              <td align="center">
-                <%= sprint.description %>
-              </td>
-
-              <td align="center">
-                <% activities = 0 %>
-                <% sprint.activities.each do |activity| %>
-                  <% if activity.project.id == @project.id %>
-                    <% activities += 1 %>
-                  <% end %>
-                <% end %>
-                <%= activities %>
-              </td>
-
-              <td align="center">
-                <% pontos_cadastrados = 0 %>
-                <% sprint.activities.each do |activity| %>
-                  <% if activity.project.id == @project.id %>
-                    <% pontos_cadastrados += activity.pontos_cadastrados %>
-                  <% end %>
-                <% end %>
-
-                <%= pontos_cadastrados %>
-              </td>
-
-              <td align="center">
-                <%= link_to "Visualizar", sprint_path(sprint, project: @project) %>
-              </td>
-
-              <% if can? :update, Sprint %>
-                <td width="100" align="center">
-                  <%= link_to t('buttons.edit'), edit_sprint_path(sprint, project: @project) %>
-                </td>
-            <% end %>
-
-            <% if can? :destroy, Sprint %>
-              <td width="100" align="center">
-                <%= link_to t('buttons.destroy'), sprint_path(sprint, project:@project), method: :delete, data: { confirm: t('messages.confirm') } %>
-              </td>
-            <% end %>
-
-            </tr>
-          <% end %>
-        </tbody>
-
-      </table>
-
-      <% if can? :create, Sprint %>
-        <%= link_to t('buttons.new'), new_sprint_path(project: @project), class: "btn btn-primary" %>
-      <% end %>
-      <br><br><br><br>
 
       <% if can? :update, Project %>
         <td width="100" align="center">
-          <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-primary" %> |
+          <%= link_to t('buttons.edit'), edit_project_path(@project), class: "btn btn-default" %> |
         </td>
       <% end %>
 
-      <%= link_to t('buttons.back'), projects_path, class: "btn btn-success" %>
+      <%= link_to t('buttons.back'), projects_path, class: "btn btn-default" %>
 
     </div>
 

@@ -11,9 +11,30 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-datepicker
 //= require jquery_ujs
+<<<<<<< HEAD
+=======
+//= require turbolinks
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 //= require cocoon
 //= require notifyjs
 //= require bootstrap
 //= require_tree .
+<<<<<<< HEAD
+//= require bootstrap-datepicker
+//= require jquery.minicolors
+
+
+function checkIfValidated(element){
+  var input = $(element)[0];
+  var div = input.parentElement;
+  if (input.value.length > 0 && $(div).hasClass('field_with_errors')){
+    div.removeAttribute('class');
+  }
+}
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700

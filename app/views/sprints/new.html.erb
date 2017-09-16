@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="col-lg-9">
   <div class="panel">
 
@@ -7,12 +8,11 @@
       </div>
     </div>
 
-
     <div class="panel-body">
 
       <%= form_for(@sprint, html: {class: 'form-horizontal'}) do |f| %>
 
-        <%= hidden_field_tag("project_id", @project.id) %>
+        <%= hidden_field_tag("project", @project) %>
 
         <% if @sprint.errors.any? %>
           <div id="error_explanation">
@@ -33,28 +33,43 @@
           <div class="form-group">
             <label class="col-lg-2 control-label">Descrição: </label>
             <div class="col-lg-8">
-              <%= f.text_area :description, rows: 5, class: 'form-control' %>
+              <%= f.text_field :description, class: 'form-control', onfocusout: "checkIfValidated(this)" %>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-lg-2 control-label">Início: </label>
-            <div class="col-lg-3">
-              <%= f.text_field :inicio, value: l(Date.today), class: 'form-control datepicker' %>
+            <label class="col-lg-2 control-label">Semestre:</label>
+            <div class="col-lg-2">
+              <%= f.text_field :semester, class: 'form-control', placeholder: "(ex.: #{Time.zone.now.to_date.year.to_s.last(2)}.1)", onfocusout: "checkIfValidated(this)" %>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-lg-2 control-label">Fim: </label>
-            <div class="col-lg-3">
-              <%= f.text_field :fim, value: l(Date.today + 1), class: 'form-control datepicker' %>
+            <div class="row">
+
+              <div class="col-lg-12 col-sm-4 col-xs-4 sprint-date">
+                <label class="col-lg-2 col-sm-4 col-xs-4 control-label">Início: </label>
+                <div class="col-lg-2 col-sm-8 col-xs-8">
+                  <%= f.text_field :inicio, value: l(Time.zone.now.to_date), class: 'form-control datepicker', onfocusout: "checkIfValidated(this)", onchange: 'setSprintFim(this.value)', readonly: true %>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-sm-4 col-xs-4">
+                <label class="col-lg-2 col-sm-4 col-xs-4 control-label">Fim:</label>
+                <div class="col-lg-2 col-sm-8 col-xs-8">
+                  <%= f.text_field :fim, value: l(Time.zone.now.to_date + 7), class: 'form-control datepicker', onfocusout: "checkIfValidated(this)", readonly: true %>
+                </div>
+              </div>
+
             </div>
           </div>
+
+          <br>
 
           <div class="form-group">
             <div class="col-lg-8 col-lg-offset-2">
-              <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
-              <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-success" %>
+              <%= f.submit t('buttons.save'), class: "btn btn-default" %> |
+              <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-default" %>
             </div>
           </div>
 
@@ -70,7 +85,118 @@
     $('.datepicker').datepicker({
       todayBtn: true,
       language: "pt-BR",
-      todayHighlight: true
+      todayHighlight: true,
+      daysOfWeekDisabled: [0, 6]
     });
   });
+
+  function setSprintFim(dateInput) {
+    var value = dateInput; // "04/07/2017"
+    // var d = new Date(2017, 06, 04)
+    var d = new Date(value[6] + value[7] + value[8] + value[9],
+                     parseInt(value[3] + value[4]) - 1,
+                     value[0] + value[1]);
+    var days = [0, 1, 2, 3, 4, 5, 6];
+    delete days[days.indexOf(d.getDay() - 1)]; // Excluir todos os dias menos o dia anterior
+
+    d.setDate(d.getDate() + 6);
+
+    $('#sprint_fim').datepicker('destroy');
+    $('#sprint_fim').datepicker({
+      todayBtn: true,
+      language: "pt-BR",
+      todayHighlight: true,
+      startDate: d.toLocaleDateString('pt-BR'),
+      daysOfWeekDisabled: days
+    });
+
+    $('#sprint_fim').datepicker("setDate", d.toLocaleDateString('pt-BR'));
+  }
 </script>
+=======
+<br/>
+  <h2><center>Criar Sprint</center></h2>
+<br/>
+
+<%= form_for(@sprint) do |f| %>
+  <% if @sprint.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-dismissible alert-danger">
+        <p><h5> <%= "Existe(m) #{pluralize(@sprint.errors.count, 'erro(s)')} no formulário:" %></h5></p>
+      <ul>
+      <% @sprint.errors.full_messages.each do |message| %>
+          <h6><li><%= message %></li></p></h6>
+      <% end %>
+      </ul>
+      </div>
+    </div>
+    <br>
+  <% end %>
+
+
+  <div class="col-sm-15" "panel panel-default">
+    <div class="col-sm-3" "panel-heading">
+      <ul class="nav nav-pills nav-stacked">
+      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
+      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
+      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
+      <li class="success"><a href="#">Projetos</a></li>
+      <li class="info"><a href="#">Relatórios</a></li>
+      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
+      </ul>
+    </div>
+    <div class="col-sm-9" "panel-body">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><center>Sprint</center></h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend><center>Informações</center></legend>
+            <div class="form-group">
+              <label for="inputDescription" class="col-lg-4 control-label">Descrição: </label>
+              <div class="col-lg-40">
+                <%= f.text_field :description %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputDescription" class="col-lg-4 control-label">Início: </label>
+              <div class="col-lg-40">
+                <%= f.date_field :inicio %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputDescription" class="col-lg-4 control-label">Fim: </label>
+              <div class="col-lg-40">
+                <%= f.date_field :fim %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputDescription" class="col-lg-4 control-label">Pontos cadastrados: </label>
+              <div class="col-lg-40">
+                <%= f.number_field :pontos_cadastrados, min: 0 %>
+              </div>
+            </div>
+
+            <%#= "#{params[:controller]}/#{params[:action]}" %>
+
+            <% if params[:action] == "edit" %>
+            <div class="form-group">
+              <label for="inputDescription" class="col-lg-4 control-label">Pontos atualizados: </label>
+              <div class="col-lg-40">
+                <%= f.number_field :pontos_atualizados, min: 0 %>
+              </div>
+            </div>
+            <% end %>
+      </div>
+
+      <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
+      <%= link_to t('buttons.back'), sprints_path, class: "btn btn-success" %>
+
+    </div>
+  </div>
+
+<% end %>
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700

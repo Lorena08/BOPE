@@ -6,17 +6,12 @@ class ProjectsController < ApplicationController
     method = "#{resource}_params"
     params[resource] &&= send(method) if respond_to?(method, true)
   end
+
   load_and_authorize_resource
 
-  #index anterior
-  #def index
-  #  @projects = Project.all.order(created_at: :desc).page(params[:page]).per(10)
-  #end
-
-  #index alterado
   def index
     if current_user_total?
-      @projects = Project.all.order(created_at: :desc).page(params[:page]).per(10)
+      @projects = Project.all.order(:description).page(params[:page]).per(10)
     else
       ids = []
       tus = TeamUser.where(user_id: current_user.id)
@@ -24,13 +19,14 @@ class ProjectsController < ApplicationController
         ids << tu.team_id
       end
 
-      return @projects = Project.where(team_id: ids).order(created_at: :desc)
-                         .page(params[:page]).per(10)
+      @projects = Project.where(team_id: ids).order(:description)
+                  .page(params[:page]).per(10)
     end
   end
 
   def show
     @project = Project.find(params[:id])
+    @sprints = @project.sprints
   end
 
    def new
@@ -39,16 +35,22 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    @sprints = Sprint.where(id: params[:sprint_ids])
-    @project_created = @project.description
-
-    @sprints.each do |sprint|
-      # @project.sprints.push(sprint)
-      @project.sprints << sprint
-    end
 
     if @project.save
-      redirect_to project_path(@project), notice: "Projeto [#{@project_created}] criado com sucesso!"
+
+      @sprints = Sprint.where(id: params[:sprint_ids])
+
+      if @sprints.present?
+        @sprints.each do |sprint|
+          project_sprint = ProjectSprint.new
+          project_sprint.project_id = @project.id
+          project_sprint.sprint_id = sprint.id
+          project_sprint.save
+        end
+      end
+
+      redirect_to project_path(@project), notice: "Projeto criado com sucesso!"
+
     else
       render :new
     end
@@ -62,6 +64,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @sprints = Sprint.where(id: params[:sprint_ids]).ids
 
+    # Atualização das sprints do projeto [ProjectSprint]
     @project.project_sprints.each do |project_sprint|
       @id = @sprints.sample
 
@@ -82,8 +85,18 @@ class ProjectsController < ApplicationController
       end
     end
 
+    # Atualização dos progressos do projeto
+    @project.progresses.each do |p|
+      p.advance = @project.progresses.where('id < ?', p.id).present? ?
+                  p.completeness.to_i - @project.progresses
+                                        .where('id < ?', p.id).last
+                                        .completeness.to_i :
+                  p.completeness
+      p.save!
+    end
+
     if @project.update(project_params)
-      redirect_to project_path(@project), notice: "Projeto [#{@project.description}] atualizado com sucesso!"
+      redirect_to project_path(@project), notice: "Projeto atualizado com sucesso!"
     else
       render :edit
     end
@@ -91,19 +104,19 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
-    @project_deleted = @project.description
-
     if @project.destroy
-      redirect_to projects_path, notice: "Projeto [#{@project_deleted}]deletado com sucesso!"
+      redirect_to projects_path, notice: "Projeto deletado com sucesso!"
     else
-      redirect_to projects_path, notice: "Erro ao deletar o Projeto [#{@project_deleted}]..."
+      redirect_to projects_path, notice: "Erro ao deletar o Project..."
     end
   end
 
   private
 
   def project_params
-    params.require(:project).permit(:id, :description, :team_id)
+    params.require(:project).permit(:id, :description, :team_id,
+                                    progresses_attributes:
+                                    [:id, :completeness, :advance,
+                                     :_destroy])
   end
-
 end

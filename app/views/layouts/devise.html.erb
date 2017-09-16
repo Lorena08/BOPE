@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BOPE</title>
+  <title>BOPE SYSTEM</title>
   <%= stylesheet_link_tag    'application' %>
+  <%= stylesheet_link_tag    'usebootstrap' %>
+  <%= stylesheet_link_tag    'bootstrap' %>
+
   <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'usebootstrap' %>
+
+  <!-- Fonts -->
+  <%#= google_webfonts_link_tag "Droid Sans" => [400,700] %>
+
   <%#= javascript_include_tag 'alert' %>
-
-
-    <%= stylesheet_link_tag    'usebootstrap' %>
-
-    <%= stylesheet_link_tag    'bootstrap' %>
-    <%= javascript_include_tag 'usebootstrap' %>
-
-
-  <%# <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cyborg/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-D9XILkoivXN+bcvB2kSOowkIvIcBbNdoDQvfBNsxYAIieZbx8/SI4NeUvrRGCpDi" crossorigin="anonymous" media="screen"> %>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cyborg/bootstrap.min.css" rel="stylesheet" integrity="sha384-D9XILkoivXN+bcvB2kSOowkIvIcBbNdoDQvfBNsxYAIieZbx8/SI4NeUvrRGCpDi" crossorigin="anonymous" media="screen"> -->
 
   <%= csrf_meta_tags %>
 
@@ -24,7 +23,7 @@
 
   <div class="container">
 
-    <%= render partial: 'layouts/shared_devise/header' %> <%# cabeçalho para tela inicial%>
+    <%= render partial: 'layouts/shared_devise/header' %>
 
     <br/>
     <%= yield %>

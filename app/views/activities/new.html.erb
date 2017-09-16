@@ -9,6 +9,7 @@
 
 
     <div class="panel-body">
+
       <%= form_for(@activity, html: {class: 'form-horizontal'}) do |f| %>
 
         <% if @activity.errors.any? %>
@@ -32,25 +33,26 @@
             <div class="form-group">
               <label class="col-lg-2 control-label">Descrição: </label>
               <div class="col-lg-8">
-                <%= f.text_field :description, class: 'form-control' %>
+                <%= f.text_field :description, class: 'form-control', onfocusout: "checkIfValidated(this)" %>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-lg-2 control-label">Pontos planejados: </label>
               <div class="col-lg-3">
-                <%= f.number_field :pontos_cadastrados, value: 0, min: 0, class: 'form-control' %>
+                <%= f.number_field :pontos_cadastrados, value: 0, min: 0, step: '0.5', class: 'form-control' %>
               </div>
             </div>
 
-            <%# editado %>
             <div class="form-group">
-              <label class="col-lg-2 control-label">Status: </label>
+              <label class="col-lg-2 control-label">Estado: </label>
               <div class="col-lg-6">
-                  <%= f.select(:status_id,
-                          Status.all.collect {|s| [ s.description, s.id ] },
-                          {},
-                          {class: "form-control"}) %>
+                <%= f.select(:status_id,
+                        Status.where.not(description: 'Validado').order(:description).collect {|s| [ s.description, s.id ] },
+                        {selected: Status.where(description: 'Não iniciada'). present? ?
+                          Status.where(description: 'Não iniciada').first.id :
+                          ''},
+                        {class: "form-control"}) %>
               </div>
             </div>
 
@@ -58,9 +60,9 @@
               <label class="col-lg-2 control-label">Rótulo: </label>
               <div class="col-lg-6">
                 <%= f.select(:label_id,
-                        Label.all.collect {|l| [ l.description, l.id ] },
-                        {},
-                        {class: "form-control"}) %>
+                            Label.all.order(:description).collect {|l| [ l.description, l.id ] },
+                            {},
+                            {class: "form-control"}) %>
               </div>
             </div>
 
@@ -72,6 +74,7 @@
                 <span style="display: block; margin-top: 9px;">
                   <%= @project.description %>
                 </span>
+
               </div>
             </div>
 
@@ -79,20 +82,62 @@
               <label class="col-lg-2 control-label">Sprint: </label>
               <div class="col-lg-6">
 
-                <%= f.hidden_field(:sprint_id, value: @sprint.id) %>
-                <span style="display: block; margin-top: 9px;">
-                  <%= @sprint.description %>
-                </span>
+                <% if @sprint.present? %>
+                  <%= f.hidden_field(:sprint_id, value: @sprint.id) %>
+                  <span style="display: block; margin-top: 9px;">
+                    <%= @sprint.description %>
+                  </span>
+                <% else %>
+                  <%= f.select(:sprint_id,
+                          @project.sprints
+                          .where('(inicio <= ? AND fim >= ?) OR (inicio > ?)',
+                                 Time.zone.now.to_date,
+                                 Time.zone.now.to_date,
+                                 Time.zone.now.to_date)
+                          .order(:inicio).collect {|s| [ "#{s.description} (#{s.semester})", s.id ] },
+                          {},
+                          {class: "form-control"}) %>
+                <% end %>
 
               </div>
+            </div>
+
+            <div class="form-group">
+              <% if current_user_total? %>
+                <label class="col-lg-2 control-label">Usuário: </label>
+                <div class="col-lg-6">
+                  <%= f.select(:user_id,
+                          @project.team.users.joins(:user_profile)
+                          .order('user_profiles.name').collect { |u| [ u.user_profile.name, u.id ] },
+                          {},
+                          {class: "form-control"}) %>
+                </div>
+              <% else %>
+                <label class="col-lg-2 control-label">Usuário: </label>
+                <div class="col-lg-6">
+
+                  <%= f.hidden_field(:user_id, value: current_user.id) %>
+                  <span style="display: block; margin-top: 9px;">
+                    <%= current_user.user_profile.name %>
+                  </span>
+
+                </div>
+              <% end %>
             </div>
 
           </fieldset>
         </div>
 
-        <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
+        <%= f.submit t('buttons.save'), class: "btn btn-default" %> |
+        <% if @sprint.present? %>
+          <%= link_to t('buttons.back'), sprint_path(@sprint, project: @project), class: "btn btn-default" %>
+        <% else %>
+          <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-default" %>
+        <% end %>
 
-        <%= link_to t('buttons.back'), sprint_path(@sprint, project: @project), class: "btn btn-success" %>
       <% end %>
+
     </div>
+
   </div>
+</div>

@@ -1,4 +1,5 @@
-<div class="col-sm-9">
+<<<<<<< HEAD
+<div class="col-lg-9">
   <div class="panel">
 
     <div class="panel-primary">
@@ -22,9 +23,12 @@
             <div class="form-group">
               <%= hidden_field_tag "users_id[]", user.id %>
 
-              <div class="col-lg-6 col-lg-offset-2">
+              <div class="col-lg-6 col-lg-offset-1">
                 <%= f.select("users_id[]",
-                        User.all.collect {|u| [ u.user_profile.name, u.id ] },
+                        User.joins(:user_profile)
+                        .where.not('user_profiles.name = ?',
+                        'Usuário Padrão').order("user_profiles.name")
+                        .collect {|u| [ u.user_profile.name, u.id ] },
                         {selected: user.id},
                         {onchange: 'users_ids(this)', class: "form-control"}) %>
               </div>
@@ -53,8 +57,8 @@
           <br/><br/>
           <div class="form-group">
             <div class="col-lg-10">
-              <%= f.submit t('buttons.save'), class: "btn btn-primary" %>
-              <%= link_to t('buttons.back'), teams_path, class: "btn btn-success"%>
+              <%= f.submit t('buttons.save'), class: "btn btn-default" %> |
+              <%= link_to t('buttons.back'), teams_path, class: "btn btn-default"%>
             </div>
           </div>
 
@@ -63,17 +67,90 @@
     </div>
   </div>
 </div>
+=======
+<br/>
+<h2><center>Editar usuários da equipe</center></h2>
+<br/>
+<%= form_for(:team_user, url: team_users_update_multiple_path, html: { method: :put }) do |f| %>
+
+
+  <div class="col-sm-15" "panel panel-default">
+    <div class="col-sm-3" "panel-heading">
+      <ul class="nav nav-pills nav-stacked">
+      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
+      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
+      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
+      <li class="success"><a href="#">Projetos</a></li>
+      <li class="info"><a href="#">Relatórios</a></li>
+      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
+      </ul>
+    </div>
+    <div class="col-sm-9" "panel-body">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><center>Equipe <%= @team.description %> </center></h3>
+          <%= hidden_field_tag("team_id", @team.id) %>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend><center>Lista dos usuários</center></legend>
+            <% for user in @team.users %>
+              <div class="form-group">
+                <%= hidden_field_tag  "users_id[]", user.id %>
+                <div class="col-lg-40">
+                  <%= f.select("users_id[]",
+                             User.all.collect {|u| [ u.user_profile.name, u.id ] },
+                             {selected: user.id},
+                             {onchange: 'users_ids(this)'}) %>
+                <a class="btn btn-default" onclick="removeSelect(this)">Remover</a>
+                <br>
+                </div>
+              </div>
+            <% end %>
+
+            <a class="btn btn-default" onclick="addSelect(this)">Adicionar</a>
+
+
+      </div>
+
+      <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
+      <%= link_to t('buttons.back'), user_profile_index_path, class: "btn btn-success"%>
+
+    </div>
+  </div>
+
+</br></br>
+
+  <span id="add"></span>
+
+
+    <%= f.submit t('buttons.save'), class: "btn btn-primary" %>
+    <%= link_to t('buttons.back'), teams_path, class: "btn btn-success"%>
+
+
+<% end %>
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
 <script>
   function users_ids(select){
     var selectedIndex = select.options.selectedIndex;
     var value = select.options[selectedIndex].value;
+<<<<<<< HEAD
     var hidden_field = select.closest('div.form-group').firstElementChild;
+=======
+    var hidden_field = select.closest('div.field').firstElementChild;
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
     hidden_field.value = value;
   };
 
   function removeSelect(link){
+<<<<<<< HEAD
     var div = link.closest('div.form-group');
+=======
+    var div = link.closest('div.field');
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
     confirm('Tem certeza?') ? div.remove() : "";
     // div.remove();

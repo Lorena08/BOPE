@@ -22,6 +22,9 @@ class StatusesController < ApplicationController
     @status = Status.new
   end
 
+  def edit
+  end
+
   def create
     @status = Status.new(status_params)
     if @status.save
@@ -29,9 +32,6 @@ class StatusesController < ApplicationController
     else
       render :new
     end
-  end
-
-  def edit
   end
 
   def update

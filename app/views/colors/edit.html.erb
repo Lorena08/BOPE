@@ -29,17 +29,37 @@
           <fieldset>
             <div class="form-group">
               <label class="col-lg-2 control-label">Descrição: </label>
-              <div class="col-lg-8">
-                <%= f.text_field :description, class: 'form-control' %>
+              <div class="col-lg-6">
+                <div class="col-lg-6">
+                  <%= f.text_field :description, class: 'form-control',
+                  onchange: 'viewColor(this)' %>
+                </div>
+                <div class="col-lg-6">
+                  <span id="view-color" class="label label-primary" style="background-color: <%= @color.description %>">
+                    Visualização do Rótulo e Estado
+                  </span>
+                </div>
               </div>
             </div>
           </fieldset>
         </div>
 
-      <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
-      <%= link_to t('buttons.back'), colors_path, class: "btn btn-success" %>
+      <%= f.submit t('buttons.save'), class: "btn btn-default" %> |
+      <%= link_to t('buttons.back'), colors_path, class: "btn btn-default" %>
 
     </div>
   </div>
 
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    $('#color_description').minicolors({theme: 'bootstrap'})
+  });
+
+  function viewColor(element) {
+    var input = $(element)[0];
+    var span = $('#view-color')[0];
+    span.style = 'background-color: ' + input.value;
+  }
+</script>

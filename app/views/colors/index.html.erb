@@ -21,6 +21,7 @@
           <% @colors.each do |color| %>
             <tr>
               <td>
+                <span class="color-description" style="background-color: <%= color.description %>"></span>
                 <%= color.description %>
               </td>
               <td width="100" align="center">
@@ -37,8 +38,9 @@
 
       <center><%= paginate @colors %></center>
 
-      <%= link_to t('buttons.new'), new_color_path, class: "btn btn-primary" %>
+      <%= link_to t('buttons.new'), new_color_path, class: "btn btn-default" %>
 
     </div>
   </div>
 </div>
+

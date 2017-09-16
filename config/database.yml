@@ -20,16 +20,26 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+<<<<<<< HEAD
+  password: avrilsc90
+  user: lorena
+=======
   host: localhost
   username: lorena
   password: avrilsc90
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
 development:
   <<: *default
   database: bope_development
+<<<<<<< HEAD
+  password: avrilsc90
+  user: lorena
+=======
   host: localhost
   username: lorena
   password: avrilsc90
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -64,9 +74,14 @@ development:
 test:
   <<: *default
   database: bope_test
+<<<<<<< HEAD
+  password: avrilsc90
+  user: lorena
+=======
   host: localhost
   username: lorena
   password: avrilsc90
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -90,6 +105,11 @@ test:
 production:
   <<: *default
   database: bope_production
+<<<<<<< HEAD
+  password: avrilsc90
+  user: lorena
+=======
   host: localhost
   username: lorena
   password: avrilsc90
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700

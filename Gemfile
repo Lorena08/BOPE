@@ -1,11 +1,28 @@
 source 'https://rubygems.org'
 
+<<<<<<< HEAD
+
+# PDF generator (from HTML) plugin for Ruby on Rails
+gem 'wicked_pdf'
+# Because wicked_pdf is a wrapper for wkhtmltopdf, you'll need to install that, too.
+gem 'wkhtmltopdf-binary'
+
+gem 'rails-erd'
+# # Create beautiful JavaScript charts with one line of Ruby http://chartkick.com
+# gem "chartkick"
+# This gem embeddes the jQuery colorpicker in the Rails asset pipeline.
+gem 'jquery-minicolors-rails'
+# bootstrap glyphicons
+gem 'bootstrap-glyphicons'
+# A Datepicker for Twitter Bootstrap, integrated with Rails assets pipeline
+gem 'bootstrap-datepicker-rails'
+=======
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'bootstrap-glyphicons'
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 # Devise i18n
 gem 'devise-i18n'
 # Devise
@@ -18,17 +35,20 @@ gem "paperclip", "~> 5.0.0"
 gem "cancan"
 # gem para gerar sentenças
 gem 'lerolero_generator'
-# gem para a data
-gem 'bootstrap-datepicker-rails'
 
-
+<<<<<<< HEAD
 gem 'rails-assets-bootstrap', source: 'https://rails-assets.org'
+=======
 
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 gem 'rails-assets-notifyjs', source: 'https://rails-assets.org'
 gem 'kaminari-i18n'
 gem 'kaminari'
 gem 'cocoon'
+<<<<<<< HEAD
+=======
 gem 'lerolero_generator'
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 gem 'faker'
 gem "will_paginate", "~> 3.0.4", :require => nil
 gem 'rails-i18n', '~> 5.0.0'
@@ -48,12 +68,19 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+<<<<<<< HEAD
+=======
+gem 'rails-assets-bootstrap', source: 'https://rails-assets.org'
 
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_12factor'
 gem 'coffee-script', '~> 2.4', '>= 2.4.1'
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

@@ -1,7 +1,10 @@
 class TeamUsersController < ApplicationController
 
+<<<<<<< HEAD
   load_and_authorize_resource
 
+=======
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
   def edit_multiple
     @team = Team.find(params[:team_id])
   end
@@ -32,6 +35,6 @@ class TeamUsersController < ApplicationController
       end
     end
 
-    redirect_to team_path(@team), notice: "Equipe [#{@team.description}] atualizada com sucesso!"
+    redirect_to team_path(@team), notice: 'Registro atualizado com sucesso'
   end
 end

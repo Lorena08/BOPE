@@ -56,9 +56,24 @@
             <div class="form-group">
               <%= hidden_field_tag  "sprint_ids[]", sprint.id %>
 
+              <% sprints_old = @project.sprints.where
+                            .not('(inicio < ? AND fim > ?) OR
+                                  (inicio > ?)',
+                               Time.zone.now.to_date,
+                               Time.zone.now.to_date,
+                               Time.zone.now.to_date).order(:inicio)
+                            .collect {|s| [ truncate("#{s.description} (#{s.semester})", length: 55), s.id ] } %>
+              <% sprints_new = Sprint.where('(inicio < ? AND fim > ?) OR
+                                          (inicio > ?)',
+                                        Time.zone.now.to_date,
+                                        Time.zone.now.to_date,
+                                        Time.zone.now.to_date).order(:inicio)
+                            .collect {|s| [ truncate("#{s.description} (#{s.semester})", length: 55), s.id ] } %>
+              <% sprints = sprints_old + sprints_new %>
+
               <div class="col-lg-6 col-lg-offset-2">
                 <%= f.select("sprint_ids[]",
-                        Sprint.all.collect {|s| [ truncate(s.description, length: 55), s.id ] },
+                        sprints,
                         {selected: sprint.id},
                         {onchange: 'sprint_ids(this)', class: 'form-control'}) %>
               </div>
@@ -86,8 +101,8 @@
           <br>
 
           <div class="col-lg-7">
-            <%= f.submit t('buttons.save'), class: "btn btn-primary" %> |
-            <%= link_to t('buttons.back'), project_path, class: "btn btn-success"%>
+            <%= f.submit t('buttons.save'), class: "btn btn-default" %> |
+            <%= link_to t('buttons.back'), project_path(@project), class: "btn btn-default"%>
           </div>
 
         </fieldset>
@@ -113,6 +128,6 @@
   };
 
   function addSelect(link){
-    $('#add').replaceWith("<%= j (render ('select_sprints')) %>");
+    $('#add').replaceWith("<%= j (render partial: ('projects/shared/select_sprints')) %>");
   };
 </script>

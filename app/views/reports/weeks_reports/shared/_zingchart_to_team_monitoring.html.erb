@@ -1,0 +1,224 @@
+<% sprint = Sprint.find(params[:sprint]) if params[:sprint].present? %>
+
+<% if sprint.present? %>
+  <% projects = Project.where(id: sprint.projects.ids).order(:description) %>
+
+  <% current_week = sprint.weeks.where(
+                      'start_w <= ? and end_w >= ?',
+                      Time.zone.now.to_date,
+                      Time.zone.now.to_date).first %>
+
+  <% if current_week.present? %>
+    <% weeks = sprint.weeks.where('id <= ?', current_week.id)
+               .order(:description) %>
+  <% else %>
+    <% weeks = sprint.weeks.order(:description) %>
+  <% end %>
+
+  <script>
+    window.onload = function() {
+      <%# DEDICAÇÃO RELATIVA %>
+      <% projects.each do |project| %>
+
+        <% avgs = [] %>
+
+        <% weeks.each do |w| %>
+
+          <% values = 0 %>
+
+          <% if w.hours_registries.where(project_id: project.id).present? %>
+            <% w.hours_registries.where(project_id: project.id).each do |hr| %>
+
+              <% values += ((hr.hours_performed * 100) / (w.expected_hours.to_f * 3600)).round(1) %>
+
+            <% end %>
+
+            <% avgs << (values /
+                        project.team.users.joins(:user_profile)
+                        .where.not('user_profiles.name = ?', 'Usuário Padrão')
+                        .count).round(1) %>
+          <% else %>
+            <% avgs << 0 %>
+          <% end %>
+
+        <% end %>
+
+        zingchart.render({
+          id: "chart_<%= project.id %>_relative_dedication",
+          data: {
+            "type": "line",
+            "title": {
+              "text": "Dedicação Relativa"
+            },
+            "plotarea": {
+              "margin-top": "10%"
+            },
+            "plot": {
+              "value-box": {
+                "text": "%v%"
+              }
+            },
+            "scale-x": {
+              "labels": <%= raw (weeks
+                                 .order(:description)
+                                 .collect { |w| w.description }) %>
+            },
+            "scale-y": {
+              "values": "0:<%= avgs.max + 10 %>:10",
+              "format":"%v%"
+            },
+            "series": [
+              {
+                "values": <%= avgs %>
+              },
+            ]
+          }
+        });
+      <% end %>
+
+      <%# VELOCIDADE %>
+      <% projects.each do |project| %>
+
+        <% speed = [] %>
+
+        <% weeks.order(:start_w).each do |w| %>
+
+          <% b = Burndown.where(project_id: project.id, week_id: w.id).first %>
+          <% b.present? ? speed << b.points_made : speed << 0 %>
+
+        <% end %>
+
+        zingchart.render({
+          id: "chart_<%= project.id %>_speed",
+          data: {
+            "type": "line",
+            "title": {
+              "text": "Velocidade"
+            },
+            "plotarea": {
+              "margin-top": "10%"
+            },
+            "plot": {
+              "value-box": {
+                "text": "%v pts."
+              }
+            },
+            "scale-x": {
+              "labels": <%= raw (weeks
+                                 .order(:start_w)
+                                 .collect { |w| w.description }) %>
+            },
+            "scale-y": {
+              "values": "0:<%= speed.max + 2 %>:2",
+              "label": {
+                "text": "Pontos"
+              }
+            },
+            "series": [
+              {
+                "values": <%= speed %>
+              }
+            ]
+          }
+        });
+      <% end %>
+
+      <%# BURNDOWN %>
+      <% projects.each do |project| %>
+
+        <% expected_points = 0 %>
+
+        <% if Activity.where(sprint_id: sprint.id, project_id: project.id).present? %>
+          <% Activity.where(sprint_id: sprint.id, project_id: project.id).each do |a| %>
+            <% expected_points += a.pontos_cadastrados %>
+          <% end %>
+        <% else %>
+          <% expected_points = 0 %>
+        <% end %>
+
+        zingchart.render({
+          id: "chart_<%= project.id %>_burndown",
+          data: {
+            "type": "line",
+            "title": {
+              "text": "Burndown"
+            },
+            "legend": {
+              "layout":"1x", //row x column
+              "position": "50% 10%",
+              "padding": "10%",
+              "adjust-layout": "true"
+            },
+            "plotarea": {
+              "margin-top": "10%"
+            },
+            "plot": {
+              "value-box": {
+                "text": "%v pts."
+              }
+            },
+            "scale-x": {
+              "labels": <%= raw (["Semana 0"] +
+                                 weeks.order(:start_w)
+                                 .collect { |w| w.description }) %>
+            },
+            "scale-y": {
+              "values": "0:<%= expected_points + 20 %>:20",
+              "label": {
+                "text": "Pontos"
+              }
+            },
+            "series": [
+
+              <% burndowns = [] %>
+              <% expected_points_for_week = [] %>
+
+              <% if expected_points > 0 %>
+
+                <% burndowns = [expected_points] %>
+
+                <% for week in 0..weeks.count %>
+                    <% expected_points_for_week <<
+                       expected_points - ((expected_points.to_f /
+                                           weeks.count) * week) %>
+                <% end %>
+
+                <% expected_points_for_week = expected_points_for_week.collect { |ep| ep.round(0) } %>
+
+                <% weeks.each do |w| %>
+
+                  <% b = Burndown.where(project_id: project.id, week_id: w.id).first %>
+
+                  <% if b.present? %>
+                    <% burndowns << (burndowns.last - b.points_made).round(1) %>
+                  <% else %>
+                    <% burndowns << burndowns.last %>
+                  <% end %>
+
+                <% end %>
+
+                <% burndowns = burndowns.collect { |b| b.round(0) } %>
+
+              <% else %>
+
+                <% weeks.count.times do %>
+                  <% burndowns << 0 %>
+                  <% expected_points_for_week << 0 %>
+                <% end %>
+
+              <% end %>
+              {
+                "values": <%= burndowns %>,
+                "text": "Real"
+              },
+              {
+                "values": <%= expected_points_for_week %>,
+                "text": "Ideal"
+              }
+            ]
+          }
+        });
+      <% end %>
+    };
+  </script>
+<% end %>

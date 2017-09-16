@@ -3,7 +3,7 @@
 
     <div class="panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title"><center>Lista de status</center></h3>
+        <h3 class="panel-title"><center>Lista de estados</center></h3>
       </div>
     </div>
 
@@ -25,7 +25,12 @@
                 <%= status.description %>
               </td>
               <td>
-                <%= status.color.description %>
+                <% if status.color.blank? %>
+                  -
+                <% else %>
+                  <span class="color-description" style="background-color: <%= status.color.description %>"></span>
+                  <%= status.color.description %>
+                <% end %>
               </td>
               <td width="100" align="center">
                 <%= link_to t('buttons.edit'), edit_status_path(status) %>
@@ -41,8 +46,9 @@
 
       <center><%= paginate @statuses %></center>
 
-      <%= link_to t('buttons.new'), new_status_path, class: "btn btn-primary" %>
+      <%= link_to t('buttons.new'), new_status_path, class: "btn btn-default" %>
 
     </div>
   </div>
 </div>
+

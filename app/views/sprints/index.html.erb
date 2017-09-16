@@ -1,0 +1,75 @@
+<<<<<<< HEAD
+<% if current_user_total? %>
+  <%= render partial: 'sprints/shared/index_adm' %>
+<% else %>
+  <%= render partial: 'sprints/shared/index_user' %>
+<% end %>
+=======
+<br/>
+  <h2><center>Lista de Sprints</center></h2>
+<br/>
+  <div class="col-sm-15" "panel panel-default">
+    <div class="col-sm-3" "panel-heading">
+      <ul class="nav nav-pills nav-stacked">
+      <li class="active"><%= link_to t('buttons.home'),root_path %></li>
+      <li class="danger"><%= link_to "Usuários", user_profile_index_path %></li>
+      <li class="warning"></span><%= link_to "Equipes", teams_path %></li>
+      <li class="success"><a href="#">Projetos</a></li>
+      <li class="info"><a href="#">Relatórios</a></li>
+      <li class="warning"><%= link_to "Sprints", sprints_path %></li>
+      </ul>
+    </div>
+    <div class="col-sm-9" "panel-body">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><center>Sprints</center></h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th><center><%= @sprints.model.human_attribute_name("Descrição") %></center></th>
+              <th><center><%= @sprints.model.human_attribute_name("inicio") %></center></th>
+              <th><center><%= @sprints.model.human_attribute_name("fim") %></center></th>
+              <th><center><%= @sprints.model.human_attribute_name("pontos_cadastrados") %></center></th>
+              <th colspan="2"></th>
+            </tr>
+          </thead>
+        <tbody>
+          <% @sprints.each do |sprint| %>
+            <tr>
+              <td align="center"><%= truncate(sprint.description, length: 20) %></td> <%# trunca o tamanho para 10 %>
+              <td align="center"><%= l(sprint.inicio) %></td> <%#l=locale (traducao) -> traduz datas, palavras %>
+              <td align="center"><%= l(sprint.fim) %></td>
+              <td align="center"><%= sprint.pontos_cadastrados %></td>
+              <td>
+                <%= link_to "Visualizar", sprint_path(sprint) %>
+              </td>
+              <td>
+                <% if can? :update, Sprint %>
+                  <%= link_to t('buttons.edit'), edit_sprint_path(sprint) %>
+                <% end %>
+              </td>
+
+              <td>
+                <% if can? :destroy, Sprint %>
+                  <%= link_to t('buttons.destroy'), sprint_path(sprint), method: :delete, data: { confirm: t('messages.confirm') } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <%= paginate @sprints %>
+      <br>
+      <% if can? :create, Sprint %>
+        <%= link_to t('buttons.new'), new_sprint_path, class: "btn btn-primary" %> |
+      <% end %>
+      <%= link_to t('buttons.back'),root_path, class: "btn btn-success" %>
+
+      </div>
+    </div>
+  </div>
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700

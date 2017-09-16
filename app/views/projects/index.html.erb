@@ -22,12 +22,7 @@
 
             <th><center>Qtd. Sprints</center></th>
 
-            <%# adicionado %>
-            <% if current_user_total? %>
-              <th colspan="3"></th>
-            <% else %>
-              <th></th>
-            <% end %>
+            <th colspan="4"></th>
 
           </tr>
         </thead>
@@ -41,12 +36,72 @@
               </td>
 
               <td align="center">
-                <%= project.team.description if project.team.present? %>
+                <%= project.team.description %>
               </td>
 
               <td align="center">
+                <!-- Aparecer a quantidade exata de sprints no projeto, sem filtros -->
                 <%= project.sprints.count %>
               </td>
+
+              <% unless current_user_total? %>
+
+                <%# VERIFICA SE EXISTE ALGUMA SPRINT EM ANDAMENTO %>
+                <% if project.sprints.where('inicio <= ? AND fim >= ?',
+                                            Time.zone.now.to_date, Time.zone.now.to_date).present? %>
+
+                  <%# RECUPERA A SEMANA CORRENTE DA SPRINT EM ANDAMENTO %>
+                  <% w_id = project.sprints.where('inicio <= ? AND fim >= ?', Time.zone.now.to_date, Time.zone.now.to_date).first.weeks.where('start_w <= ? AND end_w >= ?',Time.zone.now.to_date, Time.zone.now.to_date).first.id %>
+
+                  <%# VERIFICA SE EXISTE ALGUM REGISTRO DE HORA NESSA SEMANA
+                      DESSE USUÁRIO %>
+                  <% if HoursRegistry.where(
+                       user_id: current_user.id,
+                       week_id: w_id,
+                       project_id: project.id
+                       ).present? %>
+
+                    <%# VERIFICA SE O REGISTRO DE HORA ESTÁ COM O INÍCIO EM
+                        BRANCO %>
+                    <% if HoursRegistry.where(
+                         user_id: current_user.id,
+                         week_id: w_id,
+                         project_id: project.id
+                         ).first.start_hr.blank? %>
+
+                      <%# SE SIM, IMPRIME O LOGAR %>
+                      <td width="100" align="center">
+                        <%= link_to "Logar", project_login_path(project, week: w_id), method: 'post' %>
+                      </td>
+
+                    <% else %>
+
+                      <%# SE NÃO, IMPRIME O DESLOGAR %>
+                      <td width="100" align="center">
+                        <%= link_to "Deslogar", project_logout_path(project, week: w_id), method: 'put' %>
+                      </td>
+
+                    <% end %>
+
+                  <% else %>
+
+                    <%# SE NÃO, IMPRIME O LOGAR %>
+                    <td width="100" align="center">
+                      <%= link_to "Logar", project_login_path(project, week: w_id), method: 'post' %>
+                    </td>
+
+                  <% end %>
+
+                <% else %>
+
+                  <%# SE NÃO, IMPRIME O LOGAR 'NÃO PERMITIDO' %>
+                  <td width="100" align="center">
+                    <a style="cursor: not-allowed;">Logar</a>
+                  </td>
+
+                <% end %>
+
+              <% end %> <%# / UNLESS CURRENT_USER_TOTAL?  %>
 
               <td width="100" align="center">
                 <%= link_to "Visualizar", project_path(project) %>
@@ -63,7 +118,6 @@
                   <%= link_to t('buttons.destroy'), project_path(project), method: :delete, data: { confirm: t('messages.confirm') } %>
                 </td>
               <% end %>
-
             </tr>
           <% end %>
         </tbody>
@@ -73,7 +127,7 @@
       <center><%= paginate @projects %></center>
 
       <% if can? :create, Project %>
-        <%= link_to t('buttons.new'), new_project_path, class: "btn btn-primary" %>
+        <%= link_to t('buttons.new'), new_project_path, class: "btn btn-default" %>
       <% end %>
 
     </div>

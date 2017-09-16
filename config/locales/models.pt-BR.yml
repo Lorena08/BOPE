@@ -3,30 +3,13 @@ pt-BR:
     models:
       user: Usuário
       team: Equipe
-      activity: Atividade
-      color: Cor
-      label: Rótulo
-      project: Projeto
-      sprint: Sprint
-      status: Estado
     attributes:
       user:
+        name: Nome
         email: E-mail
         password: Senha
         confirmation_password: Confirme sua senha
-        access: Acesso
-      user_profile:
         student_number: Matrícula
-        name: Nome
+        access: Acesso
       team:
-        description: Descrição
-      sprint:
-        description: Descrição
-      color:
-        description: Descrição
-      label:
-        description: Descrição
-      status:
-        description: Descrição
-      project:
         description: Descrição

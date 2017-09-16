@@ -1,0 +1,35 @@
+<div class="chart">
+  <div id="chart"></div>
+  <p style="font-size: 8pt;text-align: justify;">
+    * Integrantes da equipe:
+
+    <% users = User.joins(:user_profile).where.not('user_profiles.name = ?',
+                'Usuário Padrão').order("user_profiles.name") %>
+    <% last_u = users.last %>
+
+    <% users.each do |u| %>
+
+      <% unless u == last_u %>
+        <%= u.user_profile.name %>,
+      <% else %>
+        <%= u.user_profile.name %>.
+      <% end %>
+
+    <% end %>
+  </p>
+</div>
+
+<br>
+
+<p>Observações extras:</p>
+<%= text_area :report, "observation", rows: 5 , style: "width: 100%; max-width: 100%;", class: 'form-control', onfocusout: 'setObservation(this)' %>
+
+<br><br>
+
+<%= form_tag reports_weeks_reports_relative_dedication_path, method: :get, style: 'display: inline-block' do %>
+  <%= hidden_field_tag :format, :pdf %>
+  <%= hidden_field_tag 'observation' %>
+  <%= hidden_field_tag 'sprint', params[:sprint] %>
+
+  <%= submit_tag "Download PDF", id: 'download_pdf', class: 'btn btn-default', target: '_blank' %> |
+<% end %>

@@ -1,6 +1,6 @@
 class ColorsController < ApplicationController
-  before_action :set_color, only: [:show, :edit, :update, :destroy]
 
+  before_action :set_color, only: [:show, :edit, :update, :destroy]
   # Erro da gem Cancan (ActiveModel::ForbiddenAttributesError)
   before_action do
     resource = controller_name.singularize.to_sym
@@ -8,9 +8,9 @@ class ColorsController < ApplicationController
     params[resource] &&= send(method) if respond_to?(method, true)
   end
   load_and_authorize_resource
-  
+
   def index
-    @colors = Color.all.order(created_at: :desc).page(params[:page]).per(10)
+    @colors = Color.all.order(created_at: :desc).page(params[:page]).per(15)
   end
 
   def show

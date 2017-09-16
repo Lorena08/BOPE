@@ -1,0 +1,129 @@
+<div class="col-lg-9">
+  <div class="panel">
+
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Listagem dos Relatórios</center></h3>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <ul class="breadcrumb">
+        <div class="row">
+
+          <div class="col-lg-5 col-sm-5 col-xs-6">
+            <li><%= link_to "Relatórios", reports_path %></li>
+            <li class="active">Relatórios semanais</li>
+          </div>
+
+        </div>
+      </ul>
+
+      <br>
+
+      <div class="row">
+        <div class="col-lg-8 col-sm-6 col-xs-6">
+          <span class="title">Tipo de relatório:</span>
+        </div>
+
+        <div class="col-lg-4 col-sm-6 col-xs-6">
+          <div class="select-user">
+            <%= select(:report, "kind",
+                       [['Dedicação relativa', 1],
+                        ['Acompanhamento por equipe', 2]],
+                       {selected: "#{params[:report_kind].present? ? params[:report_kind] : ''}"},
+                       {class: 'form-control'}) %>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="col-lg-8 col-sm-6 col-xs-6">
+          <span class="title">Relatório para a sprint:</span>
+        </div>
+
+        <div class="col-lg-4 col-sm-6 col-xs-6">
+          <div class="select-user">
+            <%= select(:sprint, "id",
+                       Sprint.all.order(:description).collect {|s| [ "#{s.description} (#{s.semester})", s.id ] },
+                       {selected: "#{params[:sprint].present? ? params[:sprint] : ''}", include_blank: "-- Nome da sprint --"},
+                       {class: 'form-control'}) %>
+          </div>
+        </div>
+
+      </div>
+
+      <br>
+
+      <button id="buscar" class="btn btn-default pull-right" onclick="buscarRelatorio()">Buscar</button>
+
+      <br><br><br>
+
+      <!-- .chart -->
+      <% if (params[:report_kind].present? && params[:sprint].present?) %>
+
+        <% if params[:report_kind] == '1' %>
+          <%= render partial: 'reports/weeks_reports/shared/chart_to_relative_dedication' %>
+        <% elsif params[:report_kind] == '2' %>
+          <%= render partial: 'reports/weeks_reports/shared/chart_to_team_monitoring' %>
+        <% end %>
+
+      <% else %>
+
+        <div class="chart">
+          <p>Primeiro indique as informações para a construção do relatório!</p>
+          <br>
+        </div>
+
+      <% end %>
+      <!-- / .chart -->
+
+      <%= link_to t('buttons.back'), reports_path, class: "btn btn-default" %>
+
+    </div><!-- /.panel-body -->
+
+  </div>
+</div>
+
+<script>
+
+  function buscarRelatorio() {
+
+    var sprint_id = $("#sprint_id")[0];
+    var report_kind = $("#report_kind")[0];
+
+    if (!sprint_id.value == "") {
+
+      sprint_id.removeAttribute("style");
+
+      if ((report_kind.value == '') || (report_kind.value == '1') ||
+          (report_kind.value == '2')) {
+
+        if (report_kind.value == '') {
+          var url = "/reports/weeks_reports/?report_kind=1&sprint=" + sprint_id.value;
+        } else {
+          var url = "/reports/weeks_reports/?report_kind=" + report_kind.value + "&sprint=" + sprint_id.value;
+        }
+        window.location.replace(url);
+      }
+
+    } else {
+      sprint_id.setAttribute("style", "box-shadow: 0 0 20px red");
+    }
+  }
+
+  function setObservation(element) {
+    var input = $(element)[0];
+    $('#observation')[0].value = input.value;
+  }
+
+</script>
+
+<% if params[:report_kind] == '1' %>
+  <%= render partial: 'reports/weeks_reports/shared/zingchart_to_relative_dedication' %>
+<% elsif params[:report_kind] == '2' %>
+  <%= render partial: 'reports/weeks_reports/shared/zingchart_to_team_monitoring' %>
+<% end %>

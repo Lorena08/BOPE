@@ -1,0 +1,57 @@
+<%= wicked_pdf_image_tag 'logo_imobilis.png', style: 'float: right; height: 80px;' %>
+<h1>Relatório de Dedicação Semanal <%= @sprint.semester %></h1>
+<b>Desenvolvido por:</b> Lorena Souza Costa <br>
+<b>Data:</b> <%= l(Time.zone.today) %> <br>
+
+
+<div id="chart" style="width: 1000px"></div>
+
+<p style="font-size: 8pt;text-align: justify;">
+  * Integrantes da equipe:
+
+  <% users = User.joins(:user_profile).where.not('user_profiles.name = ?',
+                'Usuário Padrão').order("user_profiles.name") %>
+  <% last_u = users.last %>
+
+  <% users.each do |u| %>
+
+    <% unless u == last_u %>
+      <%= u.user_profile.name %>,
+    <% else %>
+      <%= u.user_profile.name %>.
+    <% end %>
+
+  <% end %>
+</p>
+
+
+<p style="font-size: 8pt;text-align: justify;">
+
+  <% @sprint.weeks.order(:description).each do |w| %>
+      Dedicação da <%= w.description.downcase %>, esperados
+      <%= w.expected_hours %> horas para os colaboradores
+
+      <% first_u = users.first %>
+      <% users.each do |u| %>
+        <% p_count = Project.joins(team:[:users]).where('users.id = ?', u.id).count %>
+
+        <% if p_count > 1 %>
+          <% if u == first_u %>
+            e <%= w.expected_hours.to_i * p_count %> horas para <%= u.user_profile.name %>
+          <% else %>
+            , <%= w.expected_hours.to_i * p_count %> horas para <%= u.user_profile.name %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    .<br>
+  <% end %>
+
+  <% if @observation.present? %>
+    <br>
+    OBS.:
+    <%= @observation %>
+  <% end %>
+</p>
+
+<%= render partial: 'reports/weeks_reports/shared/zingchart_to_relative_dedication' %>

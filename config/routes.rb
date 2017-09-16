@@ -1,19 +1,56 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
+
+  devise_for :users
+  resources :teams
+  post 'team_users/edit_multiple'
+  put 'team_users/update_multiple'
+  resources :user_profile
+  resources :projects
+  resources :sprints, except: [:index]
+  resources :activities, except: [:index]
+  resources :colors, except: [:show]
+  resources :labels, except: [:show]
+  resources :statuses, except: [:show]
+  resources :macro_activities, except: [:index, :show]
+  resources :sub_macro_activities, except: [:show]
+  resources :progresses, except: [:show, :edit, :update]
+  resources :weeks, only: [:edit, :update]
+
+
+  resources :reports, only: [:index]
+  namespace :reports do
+    resources :weeks_reports, only: [:index]
+    get '/weeks_reports/relative_dedication' => 'weeks_reports#relative_dedication'
+    get '/weeks_reports/team_monitoring' => 'weeks_reports#team_monitoring'
+    resources :sprints_reports, only: [:index]
+    get '/sprints_reports/relative_dedication' => 'sprints_reports#relative_dedication'
+    get '/sprints_reports/activities_list' => 'sprints_reports#activities_list'
+    get '/sprints_reports/advance_and_completeness' => 'sprints_reports#advance_and_completeness'
+    get '/sprints_reports/team_monitoring' => 'sprints_reports#team_monitoring'
+    get '/sprints_reports/relative_productivity' => 'sprints_reports#relative_productivity'
+  end
+
+  post '/projects/:id/login', to: 'hours_registries#login', as: 'project_login'
+  put '/projects/:id/logout', to: 'hours_registries#logout', as: 'project_logout'
+=======
+  get 'sprints/index'
+
+  get 'sprints/show'
+
+  get 'sprints/new'
+
+  get 'sprints/edit'
 
   devise_for :users
   resources :teams
   resources :user_profile
-  resources :projects
   resources :sprints
-  resources :activities
-  resources :colors, except: [:show]
-  resources :labels, except: [:show]
-  resources :statuses, except: [:show]
-
 
   post 'team_users/edit_multiple'
   put 'team_users/update_multiple'
 
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 
   get 'home/index'
   root 'home#index'

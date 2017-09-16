@@ -15,9 +15,15 @@ Rails.application.config.assets.precompile += %w( alert.js
                                                   users.js
                                                   teams.css
                                                   home.css
-                                                  usuario_padrao.png
-                                                  users.css)
+<<<<<<< HEAD
+                                                  users.css
+                                                  logo_imobilis2.png
+                                                  usuario_padrao.png)
 
 Rails.application.config.assets.precompile += %w( usebootstrap.css
                                                   bootstrap.css
                                                   usebootstrap.js )
+=======
+                                                  usuario_padrao.png
+                                                  users.css)
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700

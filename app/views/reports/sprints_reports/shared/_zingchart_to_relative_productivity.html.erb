@@ -1,0 +1,95 @@
+<script>
+  window.onload = function() {
+
+    <% Project.all.order(:description).each do |project| %>
+
+      <% relative_productivity = [] %>
+
+      <% project.sprints.order(:inicio).each do |sprint| %>
+
+        <%# VELOCIDADE RELATIVA %>
+        <% speed = 0 %>
+        <% expected_points = 0 %>
+        <% pontos_cadastrados = 0 %>
+
+        <% Activity.where(project_id: project.id, sprint_id: sprint.id).each do |a| %>
+          <% pontos_cadastrados += a.pontos_cadastrados %>
+        <% end %>
+
+        <% Burndown.where(project_id: project.id, week_id: sprint.weeks.ids).each do |b| %>
+          <% speed += ((b.points_made / pontos_cadastrados) * 100).round(1) %>
+        <% end %>
+
+        <%# DEDICAÇÃO RELATIVA %>
+        <% relative_dedication = 0 %>
+
+        <% avgs = [] %>
+
+        <% sprint.weeks.each do |w| %>
+
+          <% values = 0 %>
+
+          <% if w.hours_registries.where(project_id: project.id).present? %>
+            <% w.hours_registries.where(project_id: project.id).each do |hr| %>
+
+              <% values += ((hr.hours_performed * 100) / (w.expected_hours.to_f * 3600)).round(1) %>
+
+            <% end %>
+
+            <% avgs << (values /
+                        project.team.users.joins(:user_profile)
+                        .where.not('user_profiles.name = ?', 'Usuário Padrão')
+                        .count).round(1) %>
+          <% else %>
+            <% avgs << 0 %>
+          <% end %>
+
+        <% end %>
+
+        <% relative_dedication = (avgs.sum / avgs.count).round(1) %>
+
+        <%# PRODUTIVIDADE RELATIVA %>
+        <% relative_productivity << ((speed / relative_dedication) * 100).round(1) %>
+
+      <% end %>
+
+      zingchart.render({
+        id: "chart_<%= project.id %>",
+        data: {
+          "type": "line",
+          "title": {
+            "text": "Produtividade Relativa"
+          },
+          "plotarea": {
+            "margin-top": "10%",
+          },
+          "plot": {
+            "value-box": {
+              "text":"%v%",
+              "padding-bottom": "5px"
+            },
+            "bar-width":"80px"
+          },
+          "scale-x": {
+            <% labels = project.sprints.order(:inicio).collect { |s| "#{s.description} (#{s.semester})"} %>
+            "labels": <%= raw (labels) %>,
+            "item": {
+              "font-size": "10pt",
+              "max-chars": 15,
+            }
+          },
+          "scale-y": {
+            "values": "0:100<%#= relative_productivity + 100 %>:50",
+            "format":"%v%"
+          },
+          "series": [
+            {
+              "values": <%= relative_productivity %>,
+            }
+          ]
+        }
+      });
+
+    <% end %>
+  };
+</script>

@@ -2,8 +2,6 @@
 
 one:
   description: MyString
-  color: one
 
 two:
   description: MyString
-  color: two

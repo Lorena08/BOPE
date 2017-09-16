@@ -1,0 +1,69 @@
+<div class="col-lg-9">
+  <div class="panel">
+
+    <div class="panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><center>Listagem dos Relatórios</center></h3>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="row">
+
+        <div class="col-lg-6 col-sm-6">
+          <%= link_to reports_weeks_reports_path do %>
+            <div class="img-reports">
+              <%= image_tag 'relatorio semanal.png' %>
+            </div>
+          <% end %>
+          <br>
+          <p class="description" style="text-align: justify; margin: 5px 10px;">
+            Relatório semanal da dedicação relativa por usuário, até a semana
+            corrente da Sprint selecionada; dedicação relativa por equipe,
+            velocidade de pontos realizados e burndown, até a semana corrente da
+            Sprint selecionada.
+          </p>
+          <div class="centered">
+            <%= link_to "Relatórios semanais", reports_weeks_reports_path, class: 'btn btn-default' %>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-6">
+          <%= link_to reports_sprints_reports_path do %>
+            <div class="img-reports">
+              <%= image_tag 'relatorio de sprint.PNG' %>
+            </div>
+          <% end %>
+          <br>
+          <p class="description" style="text-align: justify; margin: 5px 10px;">
+            Relatório de final de Sprint da dedicação relativa por usuário em
+            cada semana da Sprint finalizada; lista de atividades feitas vs
+            atividades propostas de cada projeto, de acordo com o seu tipo;
+            gráfico de completo e avanço de cada equipe; dedicação relativa por
+            equipe, velocidade de pontos realizados e burndown, até a semana
+            corrente da Sprint finalizada.
+          </p>
+          <div class="centered">
+            <%= link_to "Relatórios de sprint", reports_sprints_reports_path, class: 'btn btn-default' %>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $(document).ready(function($) {
+    $('.description').readmore({
+      speed: 100,
+      embedCSS: false,
+      collapsedHeight: 80,
+      moreLink: '<a href="#">Ler mais...</a>',
+      lessLink: '<a href="#">Fechar</a>'
+    });
+  });
+</script>

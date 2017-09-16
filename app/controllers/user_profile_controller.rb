@@ -1,9 +1,16 @@
 class UserProfileController < ApplicationController
 
+<<<<<<< HEAD
   load_and_authorize_resource
-  
+
+  def index
+    @users = UserProfile.order(:name).page(params[:page]).per(15)
+=======
+  before_action :authenticate_user!
+
   def index
     @users = UserProfile.order(:name).page(params[:page]).per(5)
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
   end
 
   def show

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 <div class="form-group">
   <%= hidden_field_tag  'users_id[]' %>
 
-  <div class="col-lg-6 col-lg-offset-2">
+  <div class="col-lg-6 col-lg-offset-1">
     <%= select(:team_user, 'users_id[]',
-               User.all.collect {|u| [ u.user_profile.name, u.id ] },
+               User.joins(:user_profile)
+                        .where.not('user_profiles.name = ?',
+                        'Usuário Padrão').order("user_profiles.name")
+                        .collect {|u| [ u.user_profile.name, u.id ] },
                {include_blank: '-- Selecione um usuário --'},
                {onchange: 'users_ids(this)', class: "form-control"}) %>
 
@@ -13,6 +17,16 @@
     <a onclick='removeSelect(this)' class="btn btn-default">Remover</a>
   </div>
 
+=======
+<div class='field'>
+  <%= hidden_field_tag  'users_id[]' %>
+  <%= select(:team_user, 'users_id[]',
+             User.all.collect {|u| [ u.user_profile.name, u.id ] },
+             {include_blank: '-- Selecione um usuário --'},
+             {onchange: 'users_ids(this)'}) %>
+  <a  onclick='removeSelect(this)' class="btn btn-default" >Remover</a>
+  <br>
+>>>>>>> d0c6183c3349cba16c54d8ce4c0fb5ee26c49700
 </div>
 
 <span id="add"></span>

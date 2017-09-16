@@ -1,6 +1,6 @@
 class LabelsController < ApplicationController
 
-  before_action :set_label, only: [:show, :edit, :update, :destroy]
+  before_action :set_label, only: [:edit, :update, :destroy]
   # Erro da gem Cancan (ActiveModel::ForbiddenAttributesError)
   before_action do
     resource = controller_name.singularize.to_sym
@@ -10,7 +10,7 @@ class LabelsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @labels = Label.all.order(created_at: :desc).page(params[:page]).per(10)
+    @labels = Label.all.order(:description).page(params[:page]).per(10)
   end
 
   def new
@@ -20,7 +20,7 @@ class LabelsController < ApplicationController
   def create
     @label = Label.new(label_params)
     if @label.save
-      redirect_to labels_path, notice: "Rótulo criado com sucesso!"
+      redirect_to labels_path, notice: "Rótulo criada com sucesso!"
     else
       render :new
     end
@@ -31,7 +31,7 @@ class LabelsController < ApplicationController
 
   def update
     if @label.update(label_params)
-      redirect_to labels_path, notice: "Rótulo atualizado com sucesso!"
+      redirect_to labels_path, notice: "Rótulo atualizada com sucesso!"
     else
       render :new
     end
@@ -39,7 +39,7 @@ class LabelsController < ApplicationController
 
   def destroy
     if @label.destroy
-      redirect_to labels_path, notice: "Rótulo excluído com sucesso!"
+      redirect_to labels_path, notice: "Rótulo excluída com sucesso!"
     end
   end
 
